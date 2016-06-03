@@ -44,7 +44,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="index.html">
-                    <img src="img/logo1.jpg" alt="">
+                    <img src="img/logo2.jpg" alt="">
                 </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -81,7 +81,159 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1>Map 2</h1>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.js"></script>
+            <script src="http://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js"></script>            
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/animation.gsap.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/animation.gsap.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.min.js"></script>
+            
+            
+                <form class="move">
+	<fieldset>
+		<legend>Toggle duration</legend>
+		<div>
+			<input type="radio" name="duration" id="bound" value="300" checked="">
+			<label for="bound">bound to scrollbar (duration = 5000)</label>
+		</div>
+		<div>
+			<input type="radio" name="duration" id="unbound" value="0">
+			<label for="unbound">unbound from scrollbar (duration = 0)</label>
+		</div>
+	</fieldset>
+</form>
+<div class="spacer s2"></div>
+<div class="spacer s0" id="trigger"></div>
+<div id="imagesequence">
+	<img id="myimg" src="img/1836.jpg"><br>
+</div>
+<div class="spacer s2"></div>
+<script>
+	// define images
+	var images = [
+		"img/1836.png",
+"img/1837.png",
+"img/1838.png",
+"img/1839.png",
+"img/1840.png",
+"img/1841.png",
+"img/1842.png",
+"img/1843.png",
+"img/1844.png",
+"img/1845.png",
+"img/1846.png",
+"img/1847.png",
+"img/1848.png",
+"img/1849.png",
+"img/1850.png",
+"img/1851.png",
+"img/1852.png",
+"img/1853.png",
+"img/1854.png",
+"img/1855.png",
+"img/1856.png",
+"img/1857.png",
+"img/1858.png",
+"img/1859.png",
+"img/1860.png",
+"img/1861.png",
+"img/1862.png",
+"img/1863.png",
+"img/1864.png",
+"img/1865.png",
+"img/1866.png",
+"img/1867.png",
+"img/1868.png",
+"img/1869.png",
+"img/1870.png",
+"img/1871.png",
+"img/1872.png",
+"img/1873.png",
+"img/1874.png",
+"img/1875.png",
+"img/1876.png",
+"img/1877.png",
+"img/1878.png",
+"img/1879.png",
+"img/1880.png",
+"img/1881.png",
+"img/1882.png",
+"img/1883.png",
+"img/1884.png",
+"img/1885.png",
+"img/1886.png",
+"img/1887.png",
+"img/1888.png",
+"img/1889.png",
+"img/1890.png",
+"img/1891.png",
+"img/1892.png",
+"img/1893.png",
+"img/1894.png",
+"img/1895.png",
+"img/1896.png",
+"img/1897.png",
+"img/1898.png",
+"img/1899.png",
+"img/1900.png",
+"img/1901.png",
+"img/1902.png",
+"img/1903.png",
+"img/1904.png",
+"img/1905.png",
+"img/1906.png",
+"img/1907.png",
+"img/1908.png",
+"img/1909.png",
+"img/1910.png",
+"img/1911.png",
+"img/1912.png",
+"img/1913.png",
+"img/1914.png",
+"img/1915.png",
+"img/1916.png",
+"img/1917.png",
+"img/1918.png",
+"img/1919.png",
+"img/1920.png",
+"img/1921.png",
+"img/1922.png"
+
+	];
+
+	// TweenMax can tween any property of any object. We use this object to cycle through the array
+	var obj = {curImg: 0};
+
+	// create tween
+	var tween = TweenMax.to(obj, 0.5,
+		{
+			curImg: images.length - 1,	// animate propery curImg to number of images
+			roundProps: "curImg",				// only integers so it can be used as an array index
+			repeat: 3,									// repeat 3 times
+			immediateRender: true,			// load first image automatically
+			ease: Linear.easeNone,			// show every image the same ammount of time
+			onUpdate: function () {
+			  $("#myimg").attr("src", images[obj.curImg]); // set the image source
+			}
+		}
+	);
+	
+
+	// init controller
+	var controller = new ScrollMagic.Controller();
+
+	// build scene
+	var scene = new ScrollMagic.Scene({triggerElement: "#imagesequence", duration: 50000})
+					.setTween(tween)
+					.addIndicators() // add indicators (requires plugin)
+					.addTo(controller);
+
+	// handle form change
+	$("form.move input[name=duration]:radio").change(function () {
+		scene.duration($(this).val());
+	});
+</script>
                 
             </div>
         </div>
