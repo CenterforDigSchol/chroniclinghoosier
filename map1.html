@@ -42,22 +42,27 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </button>
+                </button>d
                 <a class="navbar-brand" href="index.html">
-                    <img src="img/logo1.jpg" alt="">
+                    <img src="img/logo2.jpg" alt="">
                 </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a href="documentation.html">Documentation</a>
-                    </li>
+                     <li class="dropdown">
+        				<a class="dropdown-toggle" data-toggle="dropdown" href="#">About
+       					<span class="caret"></span></a>
+        				<ul class="dropdown-menu">
+          					<li><a href="documentation.html#method">Documentation</a></li>
+          					<li><a href="documentation.html#conclusion">Insights and Conclusions</a></li>
+        				</ul>
+      				</li>
                      <li class="dropdown">
         				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Maps and World Clouds
        					<span class="caret"></span></a>
         				<ul class="dropdown-menu">
-          					<li><a href="map1.html">Map 1</a></li>
+          					<li><a href="map1.html">Hoosier Choropleth</a></li>
           					<li><a href="map2.html">Map 2</a></li>
           					<li><a href="wordcloud.html">Word Cloud</a></li>
         				</ul>
@@ -73,14 +78,458 @@
     </nav>
 
     <!-- Page Content -->
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1>Map will go here.</h1>
-                
-            </div>
-        </div>
-    </div>
+                  <script src="http://d3js.org/d3.v3.min.js"></script>
+  				<script src="http://d3js.org/topojson.v1.min.js"></script>
+  <!-- I recommend you host this file on your own, since this will change without warning -->
+  <script src="http://datamaps.github.io/scripts/0.5.4/datamaps.all.js"></script>
+  <div id="container1" style="width: 100%; height: 650px;"></div>
+ <script>
+ 
+var map = new Datamap({
+  scope: 'usa',
+  element: document.getElementById('container1'),
+  geographyConfig: {
+  highlightFillColor: '#b2b2b2',
+    highlightBorderColor: '#666666',
+    highlightBorderWidth: 2,
+    popupTemplate: function(geo, data){
+    	return ['<div class="hoverinfo"><strong>',
+    			geo.properties.name, '</br> Total number of pages: ' + data.totalPages,
+    			'</br> Number of pages with &quotHoosier&quot: ' + data.hoosierPages,
+    			'</br> Percentage of pages with &quotHoosier&quot: ' +data.percent,'</strong></div>'].join('');
+    			}
+  },
+
+  fills: {
+'a': "#9EB6DE",
+'b': "#A3B9E0",
+'c': "#A6BBE1",
+'d': "#A8BDE2",
+'e': "#AABEE2",
+'f': "#ADC0E3",
+'g': "#ADC1E4",
+'h': "#AFC2E4",
+'i': "#B0C3E5",
+'j': "#B2C5E6",
+'k': "#B5C6E7",
+'l': "#B6C7E7",
+'m': "#B7C8E8",
+'n': "#B8C8E8",
+'o': "#B9C9E9",
+'p': "#BACAE9",
+'q': "#BBCBE9",
+'r': "#BCCCEA",
+'s': "#BDCCEA",
+'t': "#BECDEA",
+'u': "#BECDEB",
+'v': "#BFCEEB",
+'w': "#C0CFEB",
+'x': "#C0CFEC",
+'y': "#C2D1EC",
+'z': "#C4D1ED",
+'aa': "#C6D3EE",
+'bb': "#C8D5EF",
+'cc': "#CFDBF2",
+'dd': "#D6E0F5",
+'ff': "#EFF3FF",
+'gg': "#2171B5",
+'hh': "#90ACD8",
+'nn': "#94AED9",
+'jj': "#95AFDA",
+'kk': "#97B1DB",
+'mm': "#98B1DB",
+  defaultFill: '#DDDDDD'
+},
+
+
+data:{
+  "AZ": {
+      "fillKey": "i",
+      "percent": 0.546563973,
+      "name": "Arizona",
+      "totalPages": 311217,
+      "hoosierPages": 1701
+      
+  },
+  "CO": {
+      "fillKey": "s",
+      "percent": 0.350701403,
+      "name": "Colorado",
+      "totalPages": 3992,
+      "hoosierPages": 14
+  },
+  "DC": {
+  		"fillKey": "i",
+  		"percent": 0.538065055,
+  		"name": "District+of+Columbia",
+  		"totalPages": 803992,
+      	"hoosierPages": 4326
+  }, 		
+  "DE": {
+      "fillKey": "none",
+      "percent": "NA",
+      "name": "Delaware",
+      "totalPages":"NA",
+      "hoosierPages": "NA" 
+  },
+  "FL": {
+      "fillKey": "w",
+      "percent": 0.310669877,
+      "name": "Florida",
+      "totalPages": 131651,
+      "hoosierPages": 409
+  },
+  "GA": {
+      "fillKey": "v",
+      "percent": 0.319802419,
+      "name": "Georgia",
+      "totalPages": 31582,
+      "hoosierPages": 101
+  },
+  "HI": {
+      "fillKey": "dd",
+      "percent": 0.086143573,
+      "name": "Hawaii",
+      "totalPages": 299500,
+      "hoosierPages": 258 
+  },
+  "ID": {
+      "fillKey": "m",
+      "percent": 0.435450559,
+      "name": "Idaho",
+      "totalPages":98289,
+      "hoosierPages": 428
+      
+  },
+  "IL": {
+      "fillKey": "k",
+      "percent": 0.468222731,
+      "name": "Illinois",
+      "totalPages": 313526,
+      "hoosierPages":1468 
+  },
+  "IN": {
+      "fillKey": "gg",
+      "percent": 4.402141857,
+      "name": "Indiana",
+      "totalPages": 217008,
+      "hoosierPages": 9553
+  },
+  "IA": {
+      "fillKey": "jj",
+      "percent": 1.10200831,
+      "name": "Iowa",
+      "totalPages":161977,
+      "hoosierPages":1785 
+      
+  },
+  "KS": {
+      "fillKey": "a",
+      "percent": 0.898677204,
+      "name": "Kansas",
+      "totalPages": 335048,
+      "hoosierPages": 3011 
+  },
+  "KY": {
+      "fillKey": "nn",
+      "percent": 1.131378156,
+      "name": "Kentucky",
+      "totalPages": 331189,
+      "hoosierPages": 3747
+  },
+  "LA": {
+      "fillKey": "aa",
+      "percent": 0.238855466,
+      "name": "Louisiana",
+      "totalPages": 324464,
+      "hoosierPages": 775
+  },
+  "MD": {
+      "fillKey": "z",
+      "percent": 0.261478461,
+      "name": "Maryland",
+      "totalPages": 157948,
+      "hoosierPages": 413
+  },
+  "ME": {
+      "fillKey": "none",
+      "percent": "NA",
+      "name": "Maine",
+      "totalPages": "NA",
+      "hoosierPages": "NA"
+  },
+  "MA": {
+      "fillKey": "ff",
+      "percent": 0,
+      "name": "Massachusetts",
+      "totalPages": 3117,
+      "hoosierPages": 0
+      
+  },
+  "MN": {
+      "fillKey": "kk",
+      "percent": 1.053948425,
+      "name": "Minnesota",
+      "totalPages": 334931,
+      "hoosierPages": 3530
+  },
+  "MI": {
+      "fillKey": "n",
+      "percent": 0.424897607,
+      "name": "Michigan",
+      "totalPages": 143564,
+      "hoosierPages": 610
+  },
+  "MS": {
+      "fillKey": "y",
+      "percent": 0.277097758,
+      "name": "Mississippi",
+      "totalPages": 133166,
+      "hoosierPages": 369
+  },
+  "MO": {
+      "fillKey": "j",
+      "percent": 0.508237042,
+      "name": "Missouri",
+      "totalPages": 355346,
+      "hoosierPages": 1806
+  },
+  "MT": {
+      "fillKey": "e",
+      "percent": 0.662405325,
+      "name": "Montana",
+      "totalPages": 275813,
+      "hoosierPages": 1827
+  },
+  "NC": {
+      "fillKey": "r",
+      "percent": 0.354854895,
+      "name": "North+Carolina",
+      "totalPages": 137521,
+      "hoosierPages": 488
+      
+  },
+  "NE": {
+      "fillKey": "h",
+      "percent": 0.566374004,
+      "name": "Nebraska",
+      "totalPages": 274377,
+      "hoosierPages": 1554
+  },
+  "NV": {
+      "fillKey": "cc",
+      "percent": 0.138081726,
+      "name": "Nevada",
+      "totalPages": 65903,
+      "hoosierPages": 91
+  },
+  "NH": {
+      "fillKey": "none",
+      "percent": "NA",
+      "name": "New+Hampshire",
+      "totalPages":"NA",
+      "hoosierPages": "NA"      
+  },
+  "NJ": {
+      "fillKey": "none",
+      "percent": "NA",
+      "name": "New+Jersey",
+      "totalPages":"NA",
+      "hoosierPages": "NA"
+  },
+  "NY": {
+      "fillKey": "bb",
+      "percent": 0.215745828,
+      "name": "New+York",
+      "totalPages": 857027,
+      "hoosierPages": 1849
+  },
+  "ND": {
+      "fillKey": "b",
+      "percent": 0.790950423,
+      "name": "North+Dakota",
+      "totalPages": 202794,
+      "hoosierPages": 1604
+  },
+  "NM": {
+      "fillKey": "p",
+      "percent": 0.385773191,
+      "name": "New+Mexico",
+      "totalPages": 237186,
+      "hoosierPages": 915
+  },
+  "OH": {
+      "fillKey": "c",
+      "percent": 0.739972899,
+      "name": "Ohio",
+      "totalPages": 320282,
+      "hoosierPages": 2370
+  },
+  "OK": {
+      "fillKey": "d",
+      "percent": 0.690579847,
+      "name": "Oklahoma",
+      "totalPages": 316980,
+      "hoosierPages": 2189
+  },
+  "OR": {
+      "fillKey": "w",
+      "percent": 0.308725857,
+      "name": "Oregon",
+      "totalPages": 327475,
+      "hoosierPages": 1011
+  },
+  "PA": {
+      "fillKey": "x",
+      "percent": 0.303478864,
+      "name": "Pennsylvania",
+      "totalPages": 363452,
+      "hoosierPages": 1103
+  },
+  "RI": {
+      "fillKey": "none",
+      "percent": "NA",
+      "name": "Rhode+Island",
+      "totalPages": "NA",
+      "hoosierPages": "NA"
+  },
+  "SC": {
+      "fillKey": "o",
+      "percent": 0.405177339,
+      "name": "South+Carolina",
+      "totalPages": 304558,
+      "hoosierPages": 1234
+  },
+  "SD": {
+      "fillKey": "f",
+      "percent": 0.608414036,
+      "name": "South+Dakota",
+      "totalPages": 63608,
+      "hoosierPages": 387
+  },
+  "TN": {
+      "fillKey": "i",
+      "percent": 0.549790724,
+      "name": "Tennessee",
+      "totalPages": 269739,
+      "hoosierPages": 1483
+  },
+  "TX": {
+      "fillKey": "r",
+      "percent": 0.363981643,
+      "name": "Texas",
+      "totalPages": 309631,
+      "hoosierPages": 1127
+  },
+  "UT": {
+      "fillKey": "l",
+      "percent": 0.454158687,
+      "name": "Utah",
+      "totalPages": 379603,
+      "hoosierPages": 1724
+  },
+  "WI": {
+      "fillKey": "none",
+      "percent": "NA",
+      "name": "Wisconsin",
+      "totalPages": "NA",
+      "hoosierPages": "NA"
+  },
+  "VA": {
+      "fillKey": "u",
+      "percent": 0.338084554,
+      "name": "Virginia",
+      "totalPages": 454620,
+      "hoosierPages": 1537
+  },
+  "VT": {
+      "fillKey": "t",
+      "percent": 0.339016259,
+      "name": "Vermont",
+      "totalPages": 336857,
+      "hoosierPages": 1142
+  },
+  "WA": {
+      "fillKey": "p",
+      "percent": 0.395160151,
+      "name": "Washington",
+      "totalPages": 318605,
+      "hoosierPages": 1259
+  },
+  "WV": {
+      "fillKey": "g",
+      "percent": 0.599248594,
+      "name": "West+Virginia",
+      "totalPages": 191907,
+      "hoosierPages": 1150
+  },
+  "WY": {
+      "fillKey": "none",
+      "percent": "NA",
+      "name": "Wyoming",
+      "totalPages": "NA",
+      "hoosierPages": "NA"
+  },
+  "CA": {
+      "fillKey": "q",
+      "percent": 0.376771425,
+      "name": "California",
+      "totalPages": 300182,
+      "hoosierPages": 1131
+  },
+  "CT": {
+      "fillKey": "mm",
+      "percent": 1.039996204,
+      "name": "Connecticut",
+      "totalPages": 105385,
+      "hoosierPages": 1096
+  },
+  "AK": {
+      "fillKey": "none",
+      "percent": "NA",
+      "name": "Alaska",
+      "totalPages": "NA",
+      "hoosierPages": "NA"
+  },
+  "AR": {
+      "fillKey": "hh",
+      "percent": 1.214574899,
+      "name": "Arkansas",
+      "totalPages": 2717,
+      "hoosierPages": 33
+  },
+  "AL": {
+      "fillKey": "v",
+      "percent": 0.318461196,
+      "name": "Alabama",
+      "totalPages": 31401,
+      "hoosierPages": 100
+  }
+},
+
+done: 
+function(datamap) {
+            datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
+            window.open("http://chroniclingamerica.loc.gov/search/pages/results/?date1=1836&date2=1922&proxtext=hoosier&x=0&y=0&dateFilterType=yearRange&rows=20&searchType=basic&state="+geography.properties.name);    
+            });
+        },
+
+function(datamap) {
+           datamap.svg.call(d3.behavior.zoom().on("zoom", redraw));
+
+           function redraw() {
+                datamap.svg.selectAll("g").attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+           }
+        }        
+        
+
+});
+map.labels();
+</script>
+		</div>
+	</div>
+</div>
+
     <!-- /.container -->
 
     <!-- jQuery -->
