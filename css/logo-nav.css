@@ -20,10 +20,35 @@ body {
 
 @media(min-width:768px) {
     body {
-        padding-top: 200px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
+        padding-top: 100px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
     }
 
     .navbar-fixed-top .navbar-brand {
         padding: 15px 0;
     }
+    
 }
+* {
+      box-sizing: border-box;
+    }
+
+    .wordcloud {
+        width: 50%;
+        margin: 100px auto;
+    }
+	.annualmap {
+        width: 75%;
+        margin: 100px auto;
+    }
+    .slick-slide {
+      margin: 0px 20px;
+    }
+
+    .slick-slide img {
+      width: 100%;
+    }
+
+    .slick-prev:before,
+    .slick-next:before {
+        color: black;
+    }

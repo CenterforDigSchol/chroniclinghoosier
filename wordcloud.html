@@ -17,6 +17,10 @@
     <!--Bootstrap CSS -->
     
     <link href="css/bootstrap.css" rel="stylesheet">
+    
+    <!--Slick CSS -->
+	<link rel="stylesheet" type="text/css" href="css/slick.css">
+  <link rel="stylesheet" type="text/css" href="css/slick-theme.css">
 
     <!-- Custom CSS -->
     <link href="css/logo-nav.css" rel="stylesheet">
@@ -63,7 +67,7 @@
        					<span class="caret"></span></a>
         				<ul class="dropdown-menu">
           					<li><a href="map1.html">Hoosier Choropleth</a></li>
-          					<li><a href="map2.html">Map 2</a></li>
+          					<li><a href="map2.html">Hoosier By Year</a></li>
           					<li><a href="wordcloud.html">Word Cloud</a></li>
         				</ul>
       				</li>
@@ -78,17 +82,70 @@
     </nav>
 
     <!-- Page Content -->
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1>Word Cloud will go here</h1>
-            </div>
-        </div>
+    
+    <div class="wordcloud">
+    <div>
+    <h1>1830</h1>
+      <img src="img/wordcloud/1830.jpg">
     </div>
+    <div>
+    <h1>1840</h1>
+      <img src="img/wordcloud/1840.jpg">
+    </div>
+    <div>
+    <h1>1850</h1>
+      <img src="img/wordcloud/1850.jpg">
+    </div>
+    <div>
+    <h1>1860</h1>
+      <img src="img/wordcloud/1860.jpg">
+    </div>
+    <div>
+    <h1>1870</h1>
+      <img src="img/wordcloud/1870.jpg">
+    </div>
+    <div>
+    <h1>1880</h1>
+      <img src="img/wordcloud/1880.jpg">
+    </div>
+    <div>
+    <h1>1890</h1>
+      <img src="img/wordcloud/1890.jpg">
+    </div>
+    <div>
+    <h1>1900</h1>
+      <img src="img/wordcloud/1900.jpg">
+    </div>
+    <div>
+    <h1>1910</h1>
+      <img src="img/wordcloud/1910.jpg">
+    </div>
+    <div>
+    <h1>1920</h1>
+      <img src="img/wordcloud/1920.jpg">
+    </div>    
+  </div>
+<script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+  <script src="js/slick.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).on('ready', function() {
+      $(".wordcloud").slick({
+      	dots: true,
+      	arrows: false,
+        infinite: true,
+        centerMode: true,
+        autoplay: true,
+        autoplaySpeed: 750,
+        fade: true
+      });
+      
+    });
+  </script>
+            
     <!-- /.container -->
 
     <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+  
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
