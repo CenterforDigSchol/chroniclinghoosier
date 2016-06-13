@@ -3,20 +3,24 @@
     }
     #annualmap.slider {
         width: 80%;
-        margin: 100px auto;
+        margin: 50px auto;
         }
     #wordcloud.slider-nav {
         width: 33%;
-        margin: 30px auto;
+        margin: 10px auto;
+        padding:-30px;
         }
     #wordcloud.slider-for {
-    	width: 35%;
-        margin: 35px auto;
+    	width: 40%;
+        margin: 20px auto;
+        padding:-30px;
+        
         }
 
     .slick-slide {
       margin: 0px 20px;
-      bottom: -30px
+      bottom: -30px;
+      padding:-30px;
     }
     .slick-slide img {
       width: 100%;

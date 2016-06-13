@@ -17,9 +17,16 @@
     <!--Bootstrap CSS -->
     
     <link href="css/bootstrap.css" rel="stylesheet">
+    
+
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
     <!-- Custom CSS -->
     <link href="css/logo-nav.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link href="css/accordion.css" rel="stylesheet">
+    
+    
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -50,21 +57,14 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                     <li class="dropdown">
-        				<a class="dropdown-toggle" data-toggle="dropdown" href="#">About
-       					<span class="caret"></span></a>
-        				<ul class="dropdown-menu">
-          					<li><a href="documentation.html#method">Documentation</a></li>
-          					<li><a href="documentation.html#conclusion">Insights and Conclusions</a></li>
-        				</ul>
-      				</li>
+                     <li><a href="documentation.html">Documentation</a></li>
                      <li class="dropdown">
         				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Maps and World Clouds
        					<span class="caret"></span></a>
         				<ul class="dropdown-menu">
           					<li><a href="map1.html">Hoosier Choropleth</a></li>
           					<li><a href="map2.html">Hoosier By Year</a></li>
-          					<li><a href="wordcloud.html">Word Cloud</a></li>
+          					<li><a href="wordcloud.html">Word Clouds By Decade</a></li>
         				</ul>
       				</li>
                     <li>
@@ -81,17 +81,182 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1 id="method">Documentation goes here</h1>
-                <p>Cat ipsum dolor sit amet, meow for food, then when human fills food dish, take a few bites of food and continue meowing but purr while eating. Dream about hunting birds spot something, big eyes, big eyes, crouch, shake butt, prepare to pounce damn that dog spread kitty litter all over house and sweet beast. Refuse to drink water except out of someone's glass hack up furballs so instantly break out into full speed gallop across the house for no reason peer out window, chatter at birds, lure them to mouth soft kitty warm kitty little ball of furr pee in human's bed until he cleans the litter box but stare out the window. Leave fur on owners clothes. Rub face on everything. Eat a plant, kill a hand under the bed, yet hate dog. Knock over christmas tree walk on car leaving trail of paw prints on hood and windshield stare out the window groom yourself 4 hours - checked, have your beauty sleep 18 hours - checked, be fabulous for the rest of the day - checked! knock dish off table head butt cant eat out of my own dish, for kick up litter. Cat is love, cat is life eat grass, throw it back up lick sellotape. Shove bum in owner's face like camera lens give attitude, for hide head under blanket so no one can see for meow so kitty power! for jump off balcony, onto stranger's head, fall asleep on the washing machine. Hopped up on catnip lick arm hair yet get video posted to internet for chasing red dot chew foot, for purr for no reason so always hungry. Have secret plans chirp at birds lay on arms while you're using the keyboard. Use lap as chair vommit food and eat it again. 
-				</p>
-                <br/>
-                <br/>
-                <br/>                
-                <br/>
-                <br/>
-                <h1 id="conclusion"> Conclusion is here </h1>
-                <p>Eat a plant, kill a hand dream about hunting birds. Chew foot kitty power! . Chew iPad power cord meowing non stop for food. Poop in the plant pot stick butt in face purr for no reason soft kitty warm kitty little ball of furr. Cats go for world domination hack up furballs. Gnaw the corn cob cat snacks. Flop over stare out the window. Purr for no reason throwup on your pillow, but howl uncontrollably for no reason has closed eyes but still sees you. Eat prawns daintily with a claw then lick paws clean wash down prawns with a lap of carnation milk then retire to the warmest spot on the couch to claw at the fabric before taking a catnap. Chase ball of string the dog smells bad. Hunt by meowing loudly at 5am next to human slave food dispenser pee in the shoe and ears back wide eyed. Use lap as chair hack up furballs. Sweet beast paw at your fat belly so meowing non stop for food stare at wall turn and meow stare at wall some more meow again continue staring stand in front of the computer screen wake up human for food at 4am. Stretch loves cheeseburgers please stop looking at your phone and pet me for behind the couch walk on car leaving trail of paw prints on hood and windshield, jump around on couch, meow constantly until given food, . Kitty loves pigs cats go for world domination yet tuxedo cats always looking dapper leave hair everywhere, so when in doubt, wash yet attack the dog then pretend like nothing happened. Spread kitty litter all over house scratch the furniture, so slap owner's face at 5am until human fills food dish lie on your belly and purr when you are asleep. Hide from vacuum cleaner chase the pig around the house destroy the blinds hide head under blanket so no one can see. I like big cats and i can not lie jump around on couch, meow constantly until given food, yet human give me attention meow pee in the shoe purr while eating. Play time you call this cat food? but stare at ceiling light jump off balcony, onto stranger's head but if it smells like fish eat as much as you wish plan steps for world domination or meow for food, then when human fills food dish, take a few bites of food and continue meowing. Please stop looking at your phone and pet me hide from vacuum cleaner and love to play with owner's hair tie, brown cats with pink ears eat the fat cats food. 
-				</p>
+            <div id="accordion-resizer" class="ui-widget-content">
+            <div id="accordion">
+                
+
+
+
+<h3>Data Clean Up</h3>
+<div id="data-clean-up" class="section level2">
+<p><em>add data cleanup</em></p>
+</div>
+<h3>Hoosier By Year Maps</h3>
+<div id="hoosier-by-year-maps" class="section level2">
+<p>These maps visually demonstrate the geographic distribution of the appearance of the term “Hoosier” in the Chronicling America data set. Each point on the map shows a place of publication where a newspaper or newspapers contain the term. The points are colored based on the number of pages for that location that contain the term Hoosier, giving the viewer some sense of where the term is used more frequently.</p>
+<p>Install the necessary packages.</p>
+<pre class="r"><code>install.packages(&quot;dplyr&quot;)
+install.packages(&quot;ggmap&quot;)
+install.packages(&quot;ggplot2&quot;)
+install.packages(&quot;jsonlite&quot;)
+install.packages(&quot;maptools&quot;)
+install.packages(&quot;plyr&quot;)
+install.packages(&quot;rgdal&quot;)
+install.packages(&quot;scales&quot;)</code></pre>
+<p>Load multiple packages by assigning package names to vector and use <code>lapply</code> to load in succession.</p>
+<pre class="r"><code>x &lt;- c(&quot;ggplot2&quot;, &quot;rgdal&quot;, &quot;scales&quot;, &quot;ggmap&quot;,&quot;plyr&quot;, &quot;dplyr&quot;, &quot;maptools&quot;, &quot;jsonlite&quot;)
+lapply(x, require, character.only = TRUE)</code></pre>
+<p>Set the working directory to the location where the data files are saved. The directory path should change.</p>
+<pre class="r"><code>setwd(&quot;c:/Users/dapolley/Desktop/chronam/data/hoosier&quot;)</code></pre>
+<p>Load the JSON files by creating a list of files in the current working directory and use the <code>do.call()</code> function to read the JSON files and combine them into one data frame. The data frame is assigned to the variable <code>data</code>. Since there are many JSON files, this step takes a minute.</p>
+<pre class="r"><code>list &lt;- list.files()
+data &lt;- do.call(rbind.fill,lapply(list,fromJSON))</code></pre>
+<p>The result is a data frame with 31 variables and 59933 observations. Use the <code>names()</code> function to see the variables in the data frame. These variables are the different metadata elements for records in the Chronicling America collection. This analysis focuses on the <strong>place_of_publication</strong> variable. This variable is preferable because of the higher level of geographic precision offered over <strong>state</strong> or <strong>county</strong>.</p>
+<p>Records with NA (no value) for <strong>place_of_publication</strong> are removed from the data frame using the <code>subset()</code> function.</p>
+<pre class="r"><code>data  &lt;- subset(data, place_of_publication != &quot;NA&quot;)</code></pre>
+<p>This results in a data frame with 59851 observations. Now, reduce the data frame to only the variables needed for this analysis by assigning the variables of interest to new vectors and combining them into a new data frame. Notice, the date is converted from MM-DD-YYY format to simply YYYY.</p>
+<pre class="r"><code>id &lt;- data$id
+place_of_publication &lt;- data$place_of_publication
+date &lt;- strtoi(substr(data$date,1, nchar(data$date)-4))
+data &lt;- data.frame(id,place_of_publication,date)</code></pre>
+<p>Write data frame to CSV file for normalizing <strong>place_of_publication</strong> name in OpenRefine.The directory path should change.</p>
+<pre class="r"><code>write.csv(data, &quot;C:/Users/dapolley/Desktop/chronam/data/data.csv&quot;, row.names = FALSE)</code></pre>
+<p><em>Open refine instructions here.</em></p>
+<p>Load the file with normalized <strong>place_of_publication</strong>, assigning it to the variable <strong>data_clean</strong>. Again, the directory path should change.</p>
+<pre class="r"><code>data_clean &lt;- read.csv(&quot;C:/Users/dapolley/Desktop/chronam/data/data-clean.csv&quot;, header = TRUE)</code></pre>
+<p>Identify only the unique values for <strong>place_of_publication</strong> to avoid geocoding duplicate locations. Assign unique values to <strong>unique_place_pub</strong> variable.</p>
+<pre class="r"><code>unique_place_pub &lt;- as.character(unique(data_clean$place_of_publication))</code></pre>
+<p>Geocode the unique locations and save to <strong>geocoded_place</strong> variable. Depending on the number of unique locations in the data set, this may take a few minutes.</p>
+<pre class="r"><code>geocoded_place  &lt;- geocode(unique_place_pub, output = &quot;latlon&quot;, source = &quot;google&quot;)</code></pre>
+<p>The result is a data frame with two variables: <strong>lon</strong> and <strong>lat</strong>. In order to join these longitude and latitude values with the location names, the <strong>unique_place_pub</strong> vector is converted to a data frame.</p>
+<pre class="r"><code>unique_place_pub &lt;- data.frame(unique_place_pub)</code></pre>
+<p>Combine the <strong>unique_place_pub</strong> data frame with the <strong>geocoded_place</strong> so that place of publication is joined with the appropriate longitude and latitude values.</p>
+<pre class="r"><code>data_unique_geocoded &lt;- cbind(unique_place_pub, geocoded_place)</code></pre>
+<p>Rename the columns so that the <strong>place_of_publication</strong> variable name matches the full data set (<strong>data_clean</strong>). This step makes joining the two data frames easier.</p>
+<pre class="r"><code>colnames(data_unique_geocoded) &lt;- c(&quot;place_of_publication&quot;, &quot;long&quot;, &quot;lat&quot;)</code></pre>
+<p>Join <strong>data_unique_geocoded</strong> with <strong>data_clean</strong>.</p>
+<pre class="r"><code>data_full_geocoded &lt;- left_join(data_clean,data_unique_geocoded)</code></pre>
+<p>The result is a data frame with five variables: <strong>id</strong>, <strong>place_of_publication</strong>, <strong>date</strong>, <strong>long</strong>, and <strong>lat</strong>. Split the data frame into smaller ones with cumulative page counts. For example, create a data frame with cumulative page counts up until 1910 and save it to a new data frame <code>df_10</code>:</p>
+<pre class="r"><code>df_1910 &lt;- subset(data_full_geocoded, date &lt;= 1910)
+count_1910 &lt;- count(df_1910, place_of_publication)
+df_1910 &lt;- left_join(df_1910, count_1910)
+df_1910 &lt;- df_1910[!duplicated(df_1910$place_of_publication), ]</code></pre>
+<p>Building a series of cumulative-count data frames demonstrates both the spreading of the term <em>Hoosier</em> geographically and the increase in the number of pages with the term in a particular location when visualized as a series of maps.</p>
+<p>In order create the maps, load a shapefile of the Unite States. This particular shapefile is obtained from National Historic Geographic Information System: <a href="https://www.nhgis.org/" class="uri">https://www.nhgis.org/</a>, a project of the Minnesota Population Center.</p>
+<p>Read the shapefile and save it to a variable <strong>us</strong>. Use the directory path to the appropriate folder where shapefile and its associated files are saved. After layer, enter the shapefile name without the <em>.shp</em> extension.</p>
+<pre class="r"><code>us  &lt;- readOGR(dsn = &quot;C:/Users/dapolley/Desktop/chronam/shapefiles/nhgis0002_shapefile_tl2010_us_state_2010&quot;, layer = &quot;US_state_2010&quot;)</code></pre>
+<p>Re-project shapefile to long-lat coordinate system and write new shapefile. This is an important step, as it allows the data points with long-lat reference points overlay accurately on the map.For more information on which projection is best for a particular map, see <a href="http://spatialreference.org/" class="uri">http://spatialreference.org/</a>.</p>
+<pre class="r"><code>proj4string(us)
+us_epsg4326 &lt;- spTransform(us, CRS(&quot;+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs&quot;))
+proj4string(us_epsg4326)
+writeOGR(us_epsg4326, dsn = &quot;C:/Users/dapolley/Desktop/chronam/shapefiles/nhgis0002_shapefile_tl2010_us_state_2010&quot;, layer = &quot;us_epsg4326&quot;, driver = &quot;ESRI Shapefile&quot;)</code></pre>
+<p>Read the simplified and re-projected shapefile.</p>
+<pre class="r"><code>us_epsg4326  &lt;- readOGR(dsn = &quot;C:/Users/dapolley/Desktop/us_epsg4326&quot;, layer = &quot;us_epsg4326&quot;)</code></pre>
+<p>Create a base map and overlay the data using the <code>ggplot2</code> package:</p>
+<pre class="r"><code>ggplot()+
+  geom_polygon(data = us_epsg4326, aes(x = long, y = lat, group = group), fill = &quot;#dddddd&quot;, color = &quot;white&quot;, size = 0.5)+
+  coord_map(&quot;albers&quot;, lat0=30, lat1=40)+
+  xlim(-170,-60)+
+  ylim(15,75)+
+  geom_point(data = df_1922, aes(x = long, y = lat, color = n), size = 0.25, alpha = .7)+
+  scale_color_gradient(limits = c(1,5443), low= &quot;#9ecae1&quot;, high= &quot;#084594&quot;, trans = &quot;sqrt&quot;)+
+  theme(axis.ticks = element_blank(),
+        axis.title = element_blank(),
+        axis.text = element_blank(),
+        rect = element_blank())</code></pre>
+</div>
+<h3>Hoosier Choropleth Map</h3>
+<div id="hoosier-choropleth-map" class="section level2">
+<p>In the <em>Hoosier By Year Maps</em> it is difficult to determine whether a particular place of publication actually has a higher occurrence of the term <em>Hoosier</em>, or whether these locations happen to have more records in the Chronicling America data set. This makes direct comparisons between places difficult. In attempt to address this issue, a map showing the percentage of newspaper pages that contain the word <em>Hoosier</em> relative to the total number of newspaper pages was created. It shows the states with a higher appearance of the term in their newspapers and allows for comparisons between the states. As expected, Indiana has the highest percentage of pages containing the term Hoosier, followed by Arkansas, Kentucky, Iowa, Minnesota, and Connecticut.</p>
+</div>
+<h3>Word Clouds by Decade</h3>
+<div id="word-clouds-by-decade" class="section level2">
+<p>These word clouds are created by looking at the word Hoosier in context. The text immediately surrounding each appearance of the word is extracted, and from this the most frequently occurring terms are plotted. The larger a term appears in the word cloud, the more often it appears in proximity to Hoosier. Obviously, the word Indiana and state appear frequently in this context, but those familiar with Indiana history will recognize other relevant terms, such as cabinet, which appears prominently due to the prevalence of ads for Hoosier Cabinets.</p>
+<p>Working with the large amounts of text in this analysis requires more computing power than is available on most desktop machines. This analysis relies an instance of R that sits on Karst, a high-throughput computing cluster available faculty and graduates students and Indiana University. For more information on Karst, see <a href="https://kb.iu.edu/d/bezu" class="uri">https://kb.iu.edu/d/bezu</a>.</p>
+<p>Install the necessary packages.</p>
+<pre class="r"><code>install.packages(&quot;dplyr&quot;)
+install.packages(&quot;jsonlite&quot;)
+install.packages(&quot;plyr&quot;)
+install.packages(&quot;quanteda&quot;)
+install.packages(&quot;RColorBewer&quot;)
+install.packages(&quot;SnowballC&quot;)
+install.packages(&quot;tm&quot;)
+install.packages(&quot;wordcloud&quot;)</code></pre>
+<p>Load the necessary packages.</p>
+<pre class="r"><code>x &lt;- c(&quot;plyr&quot;, &quot;dplyr&quot;, &quot;jsonlite&quot;, &quot;tm&quot;, &quot;quanteda&quot;, &quot;wordcloud&quot;, &quot;SnowballC&quot;, &quot;RColorBewer&quot;)
+lapply(x, require, character.only = TRUE)</code></pre>
+<p>Set the working directory to the location where the data files are saved. The directory path should change.</p>
+<pre class="r"><code>setwd(&quot;c:/Users/dapolley/Desktop/chronam/data/hoosier&quot;)</code></pre>
+<p>Load the JSON files by creating a list of files in the current working directory and use the <code>do.call()</code> function to read the JSON files and combine them into one data frame. The data frame is assigned to the variable <code>data</code>. Since there are many JSON files, this step takes a minute.</p>
+<pre class="r"><code>list &lt;- list.files()
+data &lt;- do.call(rbind.fill,lapply(list,fromJSON))</code></pre>
+<p>Remove any duplicate records.</p>
+<pre class="r"><code>data &lt;- data[!duplicated(data$id), ]</code></pre>
+<p>Change the date format from MM-DD-YYY to YYYY.</p>
+<pre class="r"><code>data[,&quot;date&quot;] &lt;- strtoi(substr(data$date,1, nchar(data$date)-4))</code></pre>
+<p>Reduce the data frame to only the variables of interest: <strong>id</strong>, <strong>data</strong>, and <strong>ocr_eng</strong>, which contains the page text.</p>
+<pre class="r"><code>data &lt;- data[,c(8,23)]</code></pre>
+<p>Now, split the text into data frames by the decade in which the record appears. This process is repeated 10 times, resulting in separate data frames for 1836-1839, 1840-1849, 1850-1859, 1860-1869, 1870-1879, 1880-1889, 1890-1899, 1900-1910, 1910-1920, and 1920-1922. Below is an example for 1836-1839.</p>
+<pre class="r"><code>text1830 &lt;- data$ocr_eng[which(data$date &gt; 1830 &amp; data$date &lt; 1840)]</code></pre>
+<p>Normalize the text, making all lowercase, removing punctuation and numbers, and removing stop-words. The letters “b”, “f”, “n”, “r”, and “t” are also removed as they are leftovers from special characters in the original JSON files.</p>
+<pre class="r"><code>text1830 &lt;- toLower(text1830)
+text1830 &lt;- tokenize(text1830, removePunct = TRUE, removeNumbers = TRUE)
+text1830 &lt;- removeFeatures(text1830, c(stopwords(&quot;english&quot;), &quot;b&quot;, &quot;f&quot;, &quot;n&quot;, &quot;r&quot;, &quot;t&quot;))</code></pre>
+<p>Perform the keyword-in-context analysis, finding the 10 words that appear before and after each occurrence of the term <em>Hoosier</em>. Write the keyword in context data frame to a CSV file. While words that appear within 10 words of a specific term may not apply directly to that term, this is the best way to identify some of the context around the word <em>Hoosier</em>.</p>
+<pre class="r"><code>text1830 &lt;- kwic(text1830, &quot;hoosier&quot;, window = 10, valuetype = &quot;regex&quot;)
+write.csv(text1830, &quot;C:/Users/dapolley/Desktop/chronam/data/hoosier_kwic/text1830.csv&quot;, row.names = FALSE)</code></pre>
+<p>The keyword-in-context CSV file has some leading and trailing white-space around the context words. This white-space is trimmed in Excel and loaded back into R.</p>
+<pre class="r"><code>text1830 &lt;- read.csv(&quot;C:/Users/dapolley/Desktop/chronam/data/hoosier_kwic/text1830.csv&quot;, header = TRUE, strip.white = TRUE)</code></pre>
+<p>Extract just the pre-context words and the post-context words and save them into a character vector <strong>text1830</strong>.</p>
+<pre class="r"><code>contextPre1830 &lt;- as.character(text1830$contextPre)
+contextPost1830 &lt;- as.character(text1830$contextPost)
+text1830 &lt;- c(contextPre1830, contextPost1830)</code></pre>
+<p>Create a corpus from the context words vector.</p>
+<pre class="r"><code>text1830 &lt;- Corpus(VectorSource(text1830))</code></pre>
+<p>Stem the words in the vector, making them singular and removing endings such as <em>ed</em> or <em>ing</em></p>
+<pre class="r"><code>text1830 &lt;- tm_map(text1830, stemDocument)</code></pre>
+<p>Remove the word <em>Hoosier</em> from from the context words corpus.There are a few instances of the word <em>Hoosier</em> appearing withing the context text since the keyword-in-context function in <code>quantea</code> cannot handle overlapping matches, and not meaningful in the final visualizations.</p>
+<pre class="r"><code>text1830 &lt;- tm_map(text1830, removeWords, &quot;hoosier&quot;)</code></pre>
+<p>Strip any white-space left as a result of stemming the corpus.</p>
+<pre class="r"><code>text1830 &lt;- tm_map(text1830, stripWhitespace)</code></pre>
+<p>Save as plain text data. This step is important before generating word frequency tables.</p>
+<pre class="r"><code>text1830 &lt;- tm_map(text1830, PlainTextDocument)</code></pre>
+<p>Create frequency table of words. The resulting table lists every word in the context corpus and how often it appears, showing which words appear most often in connection to the word <em>Hoosier</em>.</p>
+<pre class="r"><code>text1830 &lt;- TermDocumentMatrix(text1830)
+text1830 &lt;- as.matrix(text1830)
+text1830 &lt;- sort(rowSums(text1830), decreasing = TRUE)
+text1830 &lt;- data.frame(word = names(text1830), freq = text1830)</code></pre>
+<p>Finally, write the word-frequency table to a CSV file.</p>
+<pre class="r"><code>write.csv(text1830, &quot;C:/Users/dapolley/Desktop/chronam/data/context_word_freq/1830_context_freq.csv&quot;, row.names = FALSE)</code></pre>
+<p>Create a word cloud from the context words surrounding the term <em>Hoosier</em> from newspapers published 1836-1839. The <code>set.seed()</code> function ensures that each time this word cloud is generated, words appear in the same place.</p>
+<pre class="r"><code>set.seed(100)
+wordcloud(freq1830$word,freq1830$freq, scale = c(3,.1), max.words = 100, min.freq = 1, colors = &quot;#08519c&quot;)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
             </div>
         </div>
     </div>
@@ -99,6 +264,24 @@
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script>
+  $(function() {
+    $( "#accordion" ).accordion({
+      heightStyle: "fill"
+    });
+  });
+  $(function() {
+    $( "#accordion-resizer" ).resizable({
+      minHeight: 140,
+      minWidth: 200,
+      resize: function() {
+        $( "#accordion" ).accordion( "refresh" );
+      }
+    });
+  });
+  </script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
