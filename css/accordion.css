@@ -1,4 +1,6 @@
-
+.col-lg-12 {
+padding: 20px;
+}
 #accordion-resizer {
 	
     padding: 10px;
@@ -6,5 +8,5 @@
     height: 550px;
   }
   #accordion{
-  font-family: "Baskerville", Times, serif;;
+  font-family: "Baskerville", Times, serif;
   }

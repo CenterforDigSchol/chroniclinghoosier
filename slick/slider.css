@@ -2,18 +2,19 @@
       box-sizing: border-box;
     }
     #annualmap.slider {
-        width: 80%;
-        margin: 50px auto;
+        width: 75%;
+        margin: 0px auto;
+        padding: 0px;
         }
     #wordcloud.slider-nav {
-        width: 33%;
+        width: 60%;
         margin: 10px auto;
-        padding:-30px;
+        padding:0px;
         }
     #wordcloud.slider-for {
-    	width: 40%;
+    	width: 35%;
         margin: 20px auto;
-        padding:-30px;
+       bottom:-30px;
         
         }
 

@@ -81,20 +81,93 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-            <div id="accordion-resizer" class="ui-widget-content">
-            <div id="accordion">
-                
-
-
-
-<h3>Data Clean Up</h3>
-<div id="data-clean-up" class="section level2">
-<p><em>add data cleanup</em></p>
+        		<div id="accordion-resizer" class="ui-widget-content">
+        			<div id="accordion">
+						<h3>Preprocessing</h3>
+							<div id="preprocessing" class="section level2">
+								<p>The API pulls result in 176 text files in JSON format. The file extensions are changed from <em>.txt</em> to <em>.json</em>. Each file is opened in Oxygen XML editor and the header is removed. This header contains metadata about the API requests and is not necessary for the analysis. Next, each file is validated using Oxygen’s built-in JSON validation. The files are ready for reading into R.</p>
+							</div>
+						<h3>Hoosier By Year Maps</h3>
+							<div id="hoosier-by-year-maps" class="section level2">	
+								<p>These maps visually demonstrate the geographic distribution of the term <em>hoosier</em> in the Chronicling America data set. This distribution is measured by the number of times the term appears on a newspaper page. Each point on the map shows a place of publication where a newspaper or newspapers contain the term. The points are colored on a scale that is based on the number of pages containing <em>hoosier</em> in each location.The darker blue the dot appears, the more occurrences of the term in this location. Ultimately this gives the viewer some sense of regions where the term appears more frequently.</p>
+								<p>A series of packages is needed for this analysis.</p>
+								<pre class="r"><code>install.packages(&quot;dplyr&quot;)
+									install.packages(&quot;ggmap&quot;)
+									install.packages(&quot;ggplot2&quot;)
+									install.packages(&quot;jsonlite&quot;)
+									install.packages(&quot;maptools&quot;)
+									install.packages(&quot;plyr&quot;)
+									install.packages(&quot;rgdal&quot;)
+									install.packages(&quot;scales&quot;)</code></pre>
+							<p>Load multiple packages at once by assigning package names to a vector and use <code>lapply</code> to load in succession.</p>
+<pre class="r"><code>x &lt;- c(&quot;ggplot2&quot;, &quot;rgdal&quot;, &quot;scales&quot;, &quot;ggmap&quot;,&quot;plyr&quot;, &quot;dplyr&quot;, &quot;maptools&quot;, &quot;jsonlite&quot;)
+lapply(x, require, character.only = TRUE)</code></pre>
+<p>Set the working directory to the location where the data files are saved.</p>
+<pre class="r"><code>setwd(&quot;c:/Users/dapolley/Desktop/chronam/data/hoosier&quot;)</code></pre>
+<p>Load the JSON files by creating a list of files in the current working directory and use the <code>do.call()</code> function to read the JSON files and combine them into one data frame. The data frame is assigned to the variable <strong>data</strong>. Since there are many JSON files, this step takes some time.</p>
+<pre class="r"><code>list &lt;- list.files()
+data &lt;- do.call(rbind.fill,lapply(list,fromJSON))</code></pre>
+<p>The result is a data frame with 31 variables and 59933 observations. Use the <code>names()</code> function to see the variables in the data frame. These variables correspond to the metadata elements for the records in Chronicling America. This analysis focuses on the <strong>place_of_publication</strong> variable. For this analysis, the <strong>place_of_publication</strong> variable is preferable to other geographic identifiers because of the higher level of geographic precision offered over <strong>state</strong> or <strong>county</strong> and its utility in plotting specific points on a map.</p>
+<p>Records with <em>NA</em> (no value) for <strong>place_of_publication</strong> variable are removed from the data frame using the <code>subset()</code> function.</p>
+<pre class="r"><code>data  &lt;- subset(data, place_of_publication != &quot;NA&quot;)</code></pre>
+<p>This results in a data frame with 59851 observations. Now, reduce the data frame to only the variables needed for this analysis by assigning the variables of interest to new vectors and combining them into a new data frame. Notice, the date is converted from MM-DD-YYY format to simply YYYY.</p>
+<pre class="r"><code>id &lt;- data$id
+place_of_publication &lt;- data$place_of_publication
+date &lt;- strtoi(substr(data$date,1, nchar(data$date)-4))
+data &lt;- data.frame(id,place_of_publication,date)</code></pre>
+<p>Write the data frame to a CSV file to normalize <strong>place_of_publication</strong> name in OpenRefine. After each major data transformation, it is generally a good idea to create a new file documenting the changes to the data.</p>
+<pre class="r"><code>write.csv(data, &quot;C:/Users/dapolley/Desktop/chronam/data/data.csv&quot;, row.names = FALSE)</code></pre>
+<p>OpenRefine (<a href="http://openrefine.org/" class="uri">http://openrefine.org/</a>) is a useful tool for cleaning and transforming messy data. In this case, it is used to normalize <strong>place_of_publcation</strong> values that are inconsistent throughout the data. For example, Cincinnati, Ohio is listed several different ways: <em>[Cincinnati, Oh]</em>, <em>Cincinnati, Ohio</em>, and <em>Cincinnati, OH</em>. Use the Text Facet feature in OpenRefine to ensure that all the <strong>place_of_publication</strong> names are listed consistently.</p>
+<p>Load the file with normalized <strong>place_of_publication</strong> names back into R, assigning the new data frame to the variable <strong>data_clean</strong>.</p>
+<pre class="r"><code>data_clean &lt;- read.csv(&quot;C:/Users/dapolley/Desktop/chronam/data/data-clean.csv&quot;, header = TRUE)</code></pre>
+<p>Identify only the unique values for <strong>place_of_publication</strong> to avoid geocoding duplicate locations, saving time and processing. Assign unique values to <strong>unique_place_pub</strong> variable.</p>
+<pre class="r"><code>unique_place_pub &lt;- as.character(unique(data_clean$place_of_publication))</code></pre>
+<p>Geocode the unique locations and save to <strong>geocoded_place</strong> variable using the <code>geocode()</code> function. This step takes a few minutes.</p>
+<pre class="r"><code>geocoded_place  &lt;- geocode(unique_place_pub, output = &quot;latlon&quot;, source = &quot;google&quot;)</code></pre>
+<p>The result is a data frame with two variables: <strong>lon</strong> and <strong>lat</strong>. In order to join these longitude and latitude values with the location names, the <strong>unique_place_pub</strong> vector is converted to a data frame.</p>
+<pre class="r"><code>unique_place_pub &lt;- data.frame(unique_place_pub)</code></pre>
+<p>Combine the <strong>unique_place_pub</strong> data frame with the <strong>geocoded_place</strong> data frame, joining the appropriate longitude and latitude values with their place names.</p>
+<pre class="r"><code>data_unique_geocoded &lt;- cbind(unique_place_pub, geocoded_place)</code></pre>
+<p>Rename the columns so that the <strong>place_of_publication</strong> variable name matches the full data set (<strong>data_clean</strong>). This step makes joining the two data frames easier.</p>
+<pre class="r"><code>colnames(data_unique_geocoded) &lt;- c(&quot;place_of_publication&quot;, &quot;long&quot;, &quot;lat&quot;)</code></pre>
+<p>Join <strong>data_unique_geocoded</strong> with <strong>data_clean</strong>, resulting in a data frame with five variables: <strong>id</strong>, <strong>place_of_publication</strong>, <strong>date</strong>, <strong>long</strong>, and <strong>lat</strong>.</p>
+<pre class="r"><code>data_full_geocoded &lt;- left_join(data_clean,data_unique_geocoded)</code></pre>
+<p>In order to create the series of maps that show both the increase in and geographic diffusion of the number of pages containing the term <em>hoosier</em>, a series of data frames, one for each year, with cumulative page counts is needed.</p>
+<p>Split the <strong>data_full_geocoded</strong> data frame into smaller ones with cumulative page counts and save to separate variables. For example, create a data frame for all records published up until 1910 and save it to a new data frame <strong>df_10</strong>:</p>
+<pre class="r"><code>df_1910 &lt;- subset(data_full_geocoded, date &lt;= 1910)
+count_1910 &lt;- count(df_1910, place_of_publication)
+df_1910 &lt;- left_join(df_1910, count_1910)
+df_1910 &lt;- df_1910[!duplicated(df_1910$place_of_publication), ]</code></pre>
+<p>In order to create the maps, a shapefile of the United States is needed. This particular shapefile is obtained from National Historic Geographic Information System: <a href="https://www.nhgis.org/documentation/gis-data" class="uri">https://www.nhgis.org/documentation/gis-data</a>.</p>
+<p>Once downloaded, read the shapefile into R and save it to a variable <strong>us</strong>. Use the directory path to the appropriate folder where shapefile and its associated files are saved. After the <code>layer</code> argument, enter the shapefile name without the <em>.shp</em> extension.</p>
+<pre class="r"><code>us  &lt;- readOGR(dsn = &quot;C:/Users/dapolley/Desktop/chronam/shapefiles/nhgis0002_shapefile_tl2010_us_state_2010&quot;, layer = &quot;US_state_2010&quot;)</code></pre>
+<p>Next, re-project the shapefile to long-lat coordinate system and write new shapefile. This is an important step, as it allows the data with long-lat reference points overlay accurately on the map. For more information on which projection is best for a particular map, see <a href="http://spatialreference.org/" class="uri">http://spatialreference.org/</a>. Re-projecting the shapefile results in warnings printed to the console, which can be ignored.</p>
+<pre class="r"><code>proj4string(us)
+us_epsg4326 &lt;- spTransform(us, CRS(&quot;+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs&quot;))
+proj4string(us_epsg4326)
+writeOGR(us_epsg4326, dsn = &quot;C:/Users/dapolley/Desktop/chronam/shapefiles/nhgis0002_shapefile_tl2010_us_state_2010&quot;, layer = &quot;us_epsg4326&quot;, driver = &quot;ESRI Shapefile&quot;)</code></pre>
+<p>After re-projecting, the shapefile is simplified using mapshaper (<a href="http://www.mapshaper.org/" class="uri">http://www.mapshaper.org/</a>). Shapefiles from National Historic Geographic Information System come in a higher resolution than is needed for this analysis.</p>
+<p>Using the web interface of mapshaper, upload the re-projected shapefile (.shp) and its associated database file (.dbf) at the same time. Then choose simplify and check the <em>prevent shape removal</em> and <em>use planar geometry</em> boxes. Use the default method and click apply. With the slider at the top of the map, simplify the file to 0.05% of the original. Finally, export the shapefile.</p>
+<p>Read the simplified and re-projected shapefile back into R.</p>
+<pre class="r"><code>us_epsg4326  &lt;- readOGR(dsn = &quot;C:/Users/dapolley/Desktop/chronam/shapefiles/us_epsg4326&quot;, layer = &quot;us_epsg4326&quot;)</code></pre>
+<p>Create a base map and overlay the data using the <code>ggplot2</code> package:</p>
+<pre class="r"><code>ggplot()+
+  geom_polygon(data = us_epsg4326, aes(x = long, y = lat, group = group), fill = &quot;#dddddd&quot;, color = &quot;white&quot;, size = 0.5)+
+  coord_map(&quot;albers&quot;, lat0=30, lat1=40)+
+  xlim(-170,-60)+
+  ylim(15,75)+
+  geom_point(data = df_1910, aes(x = long, y = lat, color = n), size = 0.25, alpha = .7)+
+  scale_color_gradient(limits = c(1,5443), low= &quot;#9ecae1&quot;, high= &quot;#084594&quot;, trans = &quot;sqrt&quot;)+
+  theme(axis.ticks = element_blank(),
+        axis.title = element_blank(),
+        axis.text = element_blank(),
+        rect = element_blank())</code></pre>
 </div>
-<h3>Hoosier By Year Maps</h3>
-<div id="hoosier-by-year-maps" class="section level2">
-<p>These maps visually demonstrate the geographic distribution of the appearance of the term “Hoosier” in the Chronicling America data set. Each point on the map shows a place of publication where a newspaper or newspapers contain the term. The points are colored based on the number of pages for that location that contain the term Hoosier, giving the viewer some sense of where the term is used more frequently.</p>
-<p>Install the necessary packages.</p>
+						<h3>Hoosier Choropleth Map</h3>
+						<div id="hoosier-choropleth-map" class="section level2">
+
+<p>In the <a href="http://centerfordigschol.github.io/chroniclinghoosier/map2.html"><em>Hoosier By Year</em></a> maps it is difficult to determine whether a particular place of publication actually has a higher occurrence of the term <em>hoosier</em>, or whether these locations happen to have more records in the Chronicling America data set. This makes direct comparisons between places difficult. In attempt to address this issue, a map showing the percentage of newspaper pages that contain the word <em>hoosier</em> relative to the total number of newspaper pages is needed. The <a href="http://centerfordigschol.github.io/chroniclinghoosier/map1.html"><em>Hoosier Choropleth map</em></a> shows the states with a higher occurrence of the term in their newspapers and allows for comparisons between the states. As expected, Indiana has the highest percentage of pages containing the term hoosier, followed by Arkansas, Kentucky, Iowa, Minnesota, and Connecticut.</p>
+<p>If not already installed, download the necessary packages.</p>
 <pre class="r"><code>install.packages(&quot;dplyr&quot;)
 install.packages(&quot;ggmap&quot;)
 install.packages(&quot;ggplot2&quot;)
@@ -103,76 +176,33 @@ install.packages(&quot;maptools&quot;)
 install.packages(&quot;plyr&quot;)
 install.packages(&quot;rgdal&quot;)
 install.packages(&quot;scales&quot;)</code></pre>
-<p>Load multiple packages by assigning package names to vector and use <code>lapply</code> to load in succession.</p>
+<p>Load multiple packages at once by assigning package names to vector and using <code>lapply</code> to load in succession.</p>
 <pre class="r"><code>x &lt;- c(&quot;ggplot2&quot;, &quot;rgdal&quot;, &quot;scales&quot;, &quot;ggmap&quot;,&quot;plyr&quot;, &quot;dplyr&quot;, &quot;maptools&quot;, &quot;jsonlite&quot;)
 lapply(x, require, character.only = TRUE)</code></pre>
-<p>Set the working directory to the location where the data files are saved. The directory path should change.</p>
-<pre class="r"><code>setwd(&quot;c:/Users/dapolley/Desktop/chronam/data/hoosier&quot;)</code></pre>
-<p>Load the JSON files by creating a list of files in the current working directory and use the <code>do.call()</code> function to read the JSON files and combine them into one data frame. The data frame is assigned to the variable <code>data</code>. Since there are many JSON files, this step takes a minute.</p>
-<pre class="r"><code>list &lt;- list.files()
-data &lt;- do.call(rbind.fill,lapply(list,fromJSON))</code></pre>
-<p>The result is a data frame with 31 variables and 59933 observations. Use the <code>names()</code> function to see the variables in the data frame. These variables are the different metadata elements for records in the Chronicling America collection. This analysis focuses on the <strong>place_of_publication</strong> variable. This variable is preferable because of the higher level of geographic precision offered over <strong>state</strong> or <strong>county</strong>.</p>
-<p>Records with NA (no value) for <strong>place_of_publication</strong> are removed from the data frame using the <code>subset()</code> function.</p>
-<pre class="r"><code>data  &lt;- subset(data, place_of_publication != &quot;NA&quot;)</code></pre>
-<p>This results in a data frame with 59851 observations. Now, reduce the data frame to only the variables needed for this analysis by assigning the variables of interest to new vectors and combining them into a new data frame. Notice, the date is converted from MM-DD-YYY format to simply YYYY.</p>
-<pre class="r"><code>id &lt;- data$id
-place_of_publication &lt;- data$place_of_publication
-date &lt;- strtoi(substr(data$date,1, nchar(data$date)-4))
-data &lt;- data.frame(id,place_of_publication,date)</code></pre>
-<p>Write data frame to CSV file for normalizing <strong>place_of_publication</strong> name in OpenRefine.The directory path should change.</p>
-<pre class="r"><code>write.csv(data, &quot;C:/Users/dapolley/Desktop/chronam/data/data.csv&quot;, row.names = FALSE)</code></pre>
-<p><em>Open refine instructions here.</em></p>
-<p>Load the file with normalized <strong>place_of_publication</strong>, assigning it to the variable <strong>data_clean</strong>. Again, the directory path should change.</p>
-<pre class="r"><code>data_clean &lt;- read.csv(&quot;C:/Users/dapolley/Desktop/chronam/data/data-clean.csv&quot;, header = TRUE)</code></pre>
-<p>Identify only the unique values for <strong>place_of_publication</strong> to avoid geocoding duplicate locations. Assign unique values to <strong>unique_place_pub</strong> variable.</p>
-<pre class="r"><code>unique_place_pub &lt;- as.character(unique(data_clean$place_of_publication))</code></pre>
-<p>Geocode the unique locations and save to <strong>geocoded_place</strong> variable. Depending on the number of unique locations in the data set, this may take a few minutes.</p>
-<pre class="r"><code>geocoded_place  &lt;- geocode(unique_place_pub, output = &quot;latlon&quot;, source = &quot;google&quot;)</code></pre>
-<p>The result is a data frame with two variables: <strong>lon</strong> and <strong>lat</strong>. In order to join these longitude and latitude values with the location names, the <strong>unique_place_pub</strong> vector is converted to a data frame.</p>
-<pre class="r"><code>unique_place_pub &lt;- data.frame(unique_place_pub)</code></pre>
-<p>Combine the <strong>unique_place_pub</strong> data frame with the <strong>geocoded_place</strong> so that place of publication is joined with the appropriate longitude and latitude values.</p>
-<pre class="r"><code>data_unique_geocoded &lt;- cbind(unique_place_pub, geocoded_place)</code></pre>
-<p>Rename the columns so that the <strong>place_of_publication</strong> variable name matches the full data set (<strong>data_clean</strong>). This step makes joining the two data frames easier.</p>
-<pre class="r"><code>colnames(data_unique_geocoded) &lt;- c(&quot;place_of_publication&quot;, &quot;long&quot;, &quot;lat&quot;)</code></pre>
-<p>Join <strong>data_unique_geocoded</strong> with <strong>data_clean</strong>.</p>
-<pre class="r"><code>data_full_geocoded &lt;- left_join(data_clean,data_unique_geocoded)</code></pre>
-<p>The result is a data frame with five variables: <strong>id</strong>, <strong>place_of_publication</strong>, <strong>date</strong>, <strong>long</strong>, and <strong>lat</strong>. Split the data frame into smaller ones with cumulative page counts. For example, create a data frame with cumulative page counts up until 1910 and save it to a new data frame <code>df_10</code>:</p>
-<pre class="r"><code>df_1910 &lt;- subset(data_full_geocoded, date &lt;= 1910)
-count_1910 &lt;- count(df_1910, place_of_publication)
-df_1910 &lt;- left_join(df_1910, count_1910)
-df_1910 &lt;- df_1910[!duplicated(df_1910$place_of_publication), ]</code></pre>
-<p>Building a series of cumulative-count data frames demonstrates both the spreading of the term <em>Hoosier</em> geographically and the increase in the number of pages with the term in a particular location when visualized as a series of maps.</p>
-<p>In order create the maps, load a shapefile of the Unite States. This particular shapefile is obtained from National Historic Geographic Information System: <a href="https://www.nhgis.org/" class="uri">https://www.nhgis.org/</a>, a project of the Minnesota Population Center.</p>
-<p>Read the shapefile and save it to a variable <strong>us</strong>. Use the directory path to the appropriate folder where shapefile and its associated files are saved. After layer, enter the shapefile name without the <em>.shp</em> extension.</p>
-<pre class="r"><code>us  &lt;- readOGR(dsn = &quot;C:/Users/dapolley/Desktop/chronam/shapefiles/nhgis0002_shapefile_tl2010_us_state_2010&quot;, layer = &quot;US_state_2010&quot;)</code></pre>
-<p>Re-project shapefile to long-lat coordinate system and write new shapefile. This is an important step, as it allows the data points with long-lat reference points overlay accurately on the map.For more information on which projection is best for a particular map, see <a href="http://spatialreference.org/" class="uri">http://spatialreference.org/</a>.</p>
-<pre class="r"><code>proj4string(us)
-us_epsg4326 &lt;- spTransform(us, CRS(&quot;+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs&quot;))
-proj4string(us_epsg4326)
-writeOGR(us_epsg4326, dsn = &quot;C:/Users/dapolley/Desktop/chronam/shapefiles/nhgis0002_shapefile_tl2010_us_state_2010&quot;, layer = &quot;us_epsg4326&quot;, driver = &quot;ESRI Shapefile&quot;)</code></pre>
-<p>Read the simplified and re-projected shapefile.</p>
-<pre class="r"><code>us_epsg4326  &lt;- readOGR(dsn = &quot;C:/Users/dapolley/Desktop/us_epsg4326&quot;, layer = &quot;us_epsg4326&quot;)</code></pre>
-<p>Create a base map and overlay the data using the <code>ggplot2</code> package:</p>
+<p>Load the shapefile used in the <em>Hoosier By Year</em> maps.</p>
+<pre class="r"><code>us  &lt;- readOGR(dsn = &quot;C:/Users/dapolley/Desktop/chronam/shapefiles/us_epsg4326&quot;, layer = &quot;us_epsg4326&quot;)</code></pre>
+<p>Fortify the shapefile based on the state abbreviations. This step makes creating choropleth maps with the <code>ggplot2</code> package easier.</p>
+<pre class="r"><code>us  &lt;- fortify(us, region = &quot;STUSPS10&quot;)</code></pre>
+<p>Remove Alaska and Puerto Rico because there is no data for these states.</p>
+<pre class="r"><code>us &lt;- subset(us, id != &quot;AK&quot; &amp; id != &quot;PR&quot;)</code></pre>
+<p>Read in the data file and convert the <strong>id</strong> variable to character. This map relies on a simple spreadsheet, created by hand, that lists total number of pages for each state in Chronicling American and the total number of pages containing the word <em>hoosier</em>. From this information the percent of pages containing the term is calculated for each state.</p>
+<pre class="r"><code>data &lt;- read.csv(&quot;C:/Users/dapolley/Desktop/chronam/data/state-hoosier-percent.csv&quot;, header = TRUE, na.strings = &quot;NA&quot;)</code></pre>
+<p>Join <strong>data</strong> and <strong>us</strong> by id.</p>
+<pre class="r"><code>plot_data &lt;- left_join(us,data)</code></pre>
+<p>Create a choropleth map based on the percent of total pages for each state that contain the term <em>hoosier</em>.</p>
 <pre class="r"><code>ggplot()+
-  geom_polygon(data = us_epsg4326, aes(x = long, y = lat, group = group), fill = &quot;#dddddd&quot;, color = &quot;white&quot;, size = 0.5)+
-  coord_map(&quot;albers&quot;, lat0=30, lat1=40)+
-  xlim(-170,-60)+
-  ylim(15,75)+
-  geom_point(data = df_1922, aes(x = long, y = lat, color = n), size = 0.25, alpha = .7)+
-  scale_color_gradient(limits = c(1,5443), low= &quot;#9ecae1&quot;, high= &quot;#084594&quot;, trans = &quot;sqrt&quot;)+
+  geom_polygon(data = plot_data, aes(x = long, y = lat, group = group, fill = percent), color = &quot;white&quot;, size = 0.25)+
+  scale_fill_gradient(low= &quot;#eff3ff&quot;, high= &quot;#2171b5&quot;, trans = &quot;sqrt&quot;)+
   theme(axis.ticks = element_blank(),
         axis.title = element_blank(),
-        axis.text = element_blank(),
-        rect = element_blank())</code></pre>
+       axis.text = element_blank(),
+      rect = element_blank())+
+labs(fill = &quot;Percent of total pages\ncontaining the word 'hoosier'&quot;)</code></pre>
 </div>
-<h3>Hoosier Choropleth Map</h3>
-<div id="hoosier-choropleth-map" class="section level2">
-<p>In the <em>Hoosier By Year Maps</em> it is difficult to determine whether a particular place of publication actually has a higher occurrence of the term <em>Hoosier</em>, or whether these locations happen to have more records in the Chronicling America data set. This makes direct comparisons between places difficult. In attempt to address this issue, a map showing the percentage of newspaper pages that contain the word <em>Hoosier</em> relative to the total number of newspaper pages was created. It shows the states with a higher appearance of the term in their newspapers and allows for comparisons between the states. As expected, Indiana has the highest percentage of pages containing the term Hoosier, followed by Arkansas, Kentucky, Iowa, Minnesota, and Connecticut.</p>
-</div>
-<h3>Word Clouds by Decade</h3>
-<div id="word-clouds-by-decade" class="section level2">
-<p>These word clouds are created by looking at the word Hoosier in context. The text immediately surrounding each appearance of the word is extracted, and from this the most frequently occurring terms are plotted. The larger a term appears in the word cloud, the more often it appears in proximity to Hoosier. Obviously, the word Indiana and state appear frequently in this context, but those familiar with Indiana history will recognize other relevant terms, such as cabinet, which appears prominently due to the prevalence of ads for Hoosier Cabinets.</p>
-<p>Working with the large amounts of text in this analysis requires more computing power than is available on most desktop machines. This analysis relies an instance of R that sits on Karst, a high-throughput computing cluster available faculty and graduates students and Indiana University. For more information on Karst, see <a href="https://kb.iu.edu/d/bezu" class="uri">https://kb.iu.edu/d/bezu</a>.</p>
+					<h3>Word Clouds by Decade</h3>	
+						<div id="word-clouds-by-decade" class="section level2">
+<p>The <a href="http://centerfordigschol.github.io/chroniclinghoosier/wordcloud.html"><em>Word Clouds by Decade</em></a> visualizations are created by looking at the word hoosier in context. The text immediately surrounding each appearance of the word is extracted, and from this the most frequently occurring terms are plotted. The larger a term appears in the word cloud, the more often it appears in proximity to hoosier. Obviously, the word Indiana and state appear frequently in this context, but those familiar with Indiana history will recognize other relevant terms, such as cabinet, which appears prominently due to the prevalence of ads for hoosier Cabinets.</p>
+<p>Working with the large amounts of text in this analysis requires more computing power than is available on most desktop machines. This analysis relies an instance of R that sits on Karst, a high-throughput computing cluster available faculty and graduates students at Indiana University. For more information on Karst, see <a href="https://kb.iu.edu/d/bezu" class="uri">https://kb.iu.edu/d/bezu</a>.</p>
 <p>Install the necessary packages.</p>
 <pre class="r"><code>install.packages(&quot;dplyr&quot;)
 install.packages(&quot;jsonlite&quot;)
@@ -185,9 +215,9 @@ install.packages(&quot;wordcloud&quot;)</code></pre>
 <p>Load the necessary packages.</p>
 <pre class="r"><code>x &lt;- c(&quot;plyr&quot;, &quot;dplyr&quot;, &quot;jsonlite&quot;, &quot;tm&quot;, &quot;quanteda&quot;, &quot;wordcloud&quot;, &quot;SnowballC&quot;, &quot;RColorBewer&quot;)
 lapply(x, require, character.only = TRUE)</code></pre>
-<p>Set the working directory to the location where the data files are saved. The directory path should change.</p>
+<p>Set the working directory to the location where the data files are saved.</p>
 <pre class="r"><code>setwd(&quot;c:/Users/dapolley/Desktop/chronam/data/hoosier&quot;)</code></pre>
-<p>Load the JSON files by creating a list of files in the current working directory and use the <code>do.call()</code> function to read the JSON files and combine them into one data frame. The data frame is assigned to the variable <code>data</code>. Since there are many JSON files, this step takes a minute.</p>
+<p>Load the JSON files by creating a list of files in the current working directory and use the <code>do.call()</code> function to read the JSON files and combine them into one data frame. The data frame is assigned to the variable <strong>data</strong>. Since there are many JSON files, this step takes a minute.</p>
 <pre class="r"><code>list &lt;- list.files()
 data &lt;- do.call(rbind.fill,lapply(list,fromJSON))</code></pre>
 <p>Remove any duplicate records.</p>
@@ -196,13 +226,13 @@ data &lt;- do.call(rbind.fill,lapply(list,fromJSON))</code></pre>
 <pre class="r"><code>data[,&quot;date&quot;] &lt;- strtoi(substr(data$date,1, nchar(data$date)-4))</code></pre>
 <p>Reduce the data frame to only the variables of interest: <strong>id</strong>, <strong>data</strong>, and <strong>ocr_eng</strong>, which contains the page text.</p>
 <pre class="r"><code>data &lt;- data[,c(8,23)]</code></pre>
-<p>Now, split the text into data frames by the decade in which the record appears. This process is repeated 10 times, resulting in separate data frames for 1836-1839, 1840-1849, 1850-1859, 1860-1869, 1870-1879, 1880-1889, 1890-1899, 1900-1910, 1910-1920, and 1920-1922. Below is an example for 1836-1839.</p>
+<p>Now, split the text into data frames by the decade in which the records appear. This process is repeated 10 times, resulting in separate data frames for 1836-1839, 1840-1849, 1850-1859, 1860-1869, 1870-1879, 1880-1889, 1890-1899, 1900-1910, 1910-1920, and 1920-1922. Below is an example for 1836-1839.</p>
 <pre class="r"><code>text1830 &lt;- data$ocr_eng[which(data$date &gt; 1830 &amp; data$date &lt; 1840)]</code></pre>
-<p>Normalize the text, making all lowercase, removing punctuation and numbers, and removing stop-words. The letters “b”, “f”, “n”, “r”, and “t” are also removed as they are leftovers from special characters in the original JSON files.</p>
+<p>Normalize the text, making all characters lowercase, removing punctuation and numbers, and removing stop-words. The orphan letters “b”, “f”, “n”, “r”, and “t” are leftover from special characters in the JSON files and are removed.</p>
 <pre class="r"><code>text1830 &lt;- toLower(text1830)
 text1830 &lt;- tokenize(text1830, removePunct = TRUE, removeNumbers = TRUE)
 text1830 &lt;- removeFeatures(text1830, c(stopwords(&quot;english&quot;), &quot;b&quot;, &quot;f&quot;, &quot;n&quot;, &quot;r&quot;, &quot;t&quot;))</code></pre>
-<p>Perform the keyword-in-context analysis, finding the 10 words that appear before and after each occurrence of the term <em>Hoosier</em>. Write the keyword in context data frame to a CSV file. While words that appear within 10 words of a specific term may not apply directly to that term, this is the best way to identify some of the context around the word <em>Hoosier</em>.</p>
+<p>Perform the keyword-in-context analysis, finding the 10 words that appear before and after each occurrence of the term <em>hoosier</em>. Write the keyword-in-context data frame to a CSV file. While words that appear within 10 words of a specific term may not apply directly to that term, this is the best way to identify some of the context surrounding the word <em>hoosier</em>.</p>
 <pre class="r"><code>text1830 &lt;- kwic(text1830, &quot;hoosier&quot;, window = 10, valuetype = &quot;regex&quot;)
 write.csv(text1830, &quot;C:/Users/dapolley/Desktop/chronam/data/hoosier_kwic/text1830.csv&quot;, row.names = FALSE)</code></pre>
 <p>The keyword-in-context CSV file has some leading and trailing white-space around the context words. This white-space is trimmed in Excel and loaded back into R.</p>
@@ -213,30 +243,39 @@ contextPost1830 &lt;- as.character(text1830$contextPost)
 text1830 &lt;- c(contextPre1830, contextPost1830)</code></pre>
 <p>Create a corpus from the context words vector.</p>
 <pre class="r"><code>text1830 &lt;- Corpus(VectorSource(text1830))</code></pre>
-<p>Stem the words in the vector, making them singular and removing endings such as <em>ed</em> or <em>ing</em></p>
+<p>Stem the words in the vector, making them singular and removing endings such as <em>ed</em> or <em>ing</em>.</p>
 <pre class="r"><code>text1830 &lt;- tm_map(text1830, stemDocument)</code></pre>
-<p>Remove the word <em>Hoosier</em> from from the context words corpus.There are a few instances of the word <em>Hoosier</em> appearing withing the context text since the keyword-in-context function in <code>quantea</code> cannot handle overlapping matches, and not meaningful in the final visualizations.</p>
+<p>Remove the word <em>hoosier</em> from from the context words corpus.There are a few instances of the word <em>hoosier</em> appearing within the context words and since the same context is applied to these occurrences of <em>hoosier</em>, they can be removed without impacting the resulting visualization.</p>
 <pre class="r"><code>text1830 &lt;- tm_map(text1830, removeWords, &quot;hoosier&quot;)</code></pre>
 <p>Strip any white-space left as a result of stemming the corpus.</p>
 <pre class="r"><code>text1830 &lt;- tm_map(text1830, stripWhitespace)</code></pre>
 <p>Save as plain text data. This step is important before generating word frequency tables.</p>
 <pre class="r"><code>text1830 &lt;- tm_map(text1830, PlainTextDocument)</code></pre>
-<p>Create frequency table of words. The resulting table lists every word in the context corpus and how often it appears, showing which words appear most often in connection to the word <em>Hoosier</em>.</p>
+<p>Create frequency table of words. The resulting table lists every word in the context corpus and how often it appears, showing which words appear most often in connection to the word <em>hoosier</em>.</p>
 <pre class="r"><code>text1830 &lt;- TermDocumentMatrix(text1830)
 text1830 &lt;- as.matrix(text1830)
 text1830 &lt;- sort(rowSums(text1830), decreasing = TRUE)
 text1830 &lt;- data.frame(word = names(text1830), freq = text1830)</code></pre>
 <p>Finally, write the word-frequency table to a CSV file.</p>
 <pre class="r"><code>write.csv(text1830, &quot;C:/Users/dapolley/Desktop/chronam/data/context_word_freq/1830_context_freq.csv&quot;, row.names = FALSE)</code></pre>
-<p>Create a word cloud from the context words surrounding the term <em>Hoosier</em> from newspapers published 1836-1839. The <code>set.seed()</code> function ensures that each time this word cloud is generated, words appear in the same place.</p>
+<p>Create a word cloud from the word frequency tables of the context words surrounding the term <em>hoosier</em>. The <code>set.seed()</code> function ensures that each time this word cloud is generated, words appear in the same place.</p>
 <pre class="r"><code>set.seed(100)
 wordcloud(freq1830$word,freq1830$freq, scale = c(3,.1), max.words = 100, min.freq = 1, colors = &quot;#08519c&quot;)</code></pre>
 </div>
+<h3>Website Design</h3> 
+<div><p>The Chronicling Hoosier project choose to a simple static website for preservation ease. The simple website is easy to archive and will 
+one day uploaded as part of Indiana University-Purdue University Indianapolis's institutional repository, <a href="https://scholarworks.iupui.edu/">ScholarWorks</a>.
+Chronicling Hoosier is a <a href="http://getbootstrap.com/">Bootstrap</a> website. The <a href="http://startbootstrap.com/template-overviews/logo-nav/">theme template</a> was designed by <a href=http://startbootstrap.com/template-overviews/logo-nav/">Start Bootstrap</a>.</p>
+<p>The Hoosier Choropleth was designed with the <a href="http://datamaps.github.io/">DataMaps</a> Javascript library. The Hoosier By the Year Map and Wordcloud by the Decade
+image carousels were developed using the <a href="http://kenwheeler.github.io/slick/">Slick Javascript library.</a></p>
 </div>
+						
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-</div>
-</div>
-</div>
+	
 
 <script>
 
@@ -257,9 +296,6 @@ $(document).ready(function () {
   })();
 </script>
 
-            </div>
-        </div>
-    </div>
     <!-- /.container -->
 
     <!-- jQuery -->
@@ -269,7 +305,8 @@ $(document).ready(function () {
     <script>
   $(function() {
     $( "#accordion" ).accordion({
-      heightStyle: "fill"
+      heightStyle: "fill",
+      collapsible: true
     });
   });
   $(function() {
@@ -282,6 +319,7 @@ $(document).ready(function () {
     });
   });
   </script>
+  	
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>

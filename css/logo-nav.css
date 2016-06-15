@@ -5,11 +5,11 @@
  */
 
 body {
-    padding-top: 175px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
+    padding-top: 130px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
 }
 
 .navbar-fixed-top .nav {
-    padding: 55px 0;
+    padding: 45px 0;
 }
 
 .navbar-fixed-top .navbar-brand {

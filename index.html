@@ -20,6 +20,9 @@
 
     <!-- Custom CSS -->
     <link href="css/logo-nav.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+     <link href="css/tabs.css" rel="stylesheet">
+     <link href="css/backtop.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -74,15 +77,384 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1>Hello World</h1>
-                <p>Note: You may need to adjust some CSS based on the size of your logo. The default logo size is 150x50 pixels.</p>
+                <div id="tabs">
+  <ul>
+    <li><a href="#tabs-1">Introduction</a></li>
+    <li><a href="#tabs-2">Preliminary Findings</a></li>
+    <li><a href="#tabs-3">What&apos;s Next?</a></li>
+    <li><a href="#tabs-4">Bibliography</a></li>
+  </ul>
+  <div id="tabs-1">
+    <h2>Introduction</h2>
+    <p>The origin of the word hoosier has been long sought by historians and native Indianans 
+    alike.  While this research project began as a technology supported hunt for the earliest 
+    appearance and original meaning of the word, ultimately the most intriguing discoveries 
+    were the variety of meanings hoosier has encompassed through time and by geography.  
+    We believe as many before us that the origin of hoosier lies in an oral tradition.  
+    Originally published sources such as newspapers, books, literature, and pamphlets likely 
+    come well after the word enters the vocabulary of pioneering Americans.  
+    Evidence to support this includes a <i>Pittsburgh Statesmen</i> article from 1833 or 1834 
+    that already ponders the origin of the word and proposes one origin theory (Unknown, 1932),</p>
+    <p><q>Hoosier-&lsquo;The Hoosier State.&rsquo;- The good citizens of our sister State (Indiana,) have been 
+    called Hoosiers for some time past at home and abroad, sometimes honorably and sometimes
+     the reverse-as the term has become general it is high time that its origin and definition 
+     should be as generally know[n] before that section of the public lands were regularly 
+     surveyed-many families located and were called squatters-the surveyors on finding on 
+     of those would ask who&apos;s here, and place the name on their map-the question became so 
+     familiar, that on the first view of the smoke of a cabin, the exclamation often then 
+     &lsquo;who&apos;s here&rsquo; became equally so until it eventuated in the general term Hoosier.</q></p> 
+     <p>
+     Other theories of the term&apos;s origin include but are not limited to: 
+     <ul>
+     	<li>Poet James Whitcomb Riley joked that a particularly vicious brawl ends in one man asking, “Who&apos;s ear?”</li>
+		<li>A flatboatman scrap including an Indiana man resoundingly thumping his opponents, or “hushing” them</li>
+		<li>Historian John Piatt Dunn Jr. suggests the word stems from  &lsquo;hoozer&rsquo; meaning something unusually large in the Cumberland dialect of England</li>
+		<li>A more recent interpretation from Stephen H. Webb poses that the 19th century preacher, Black Harry Hoosier was the word’s namesake</li>
+		<li>A bread peddler named Hoosier’s wares are particularly popular among Indiana men working on the canals</li>
+     </ul>
+     </p>
+     <p><img src="img/hoosierbread.jpg"></img></br><i>The Indiana State sentinel.</i> (Indianapolis 
+     [Ind.]), 25 Jan. 1893. <i>Chronicling America: Historic American Newspapers.</i> Lib. of Congress. <a href="http://chroniclingamerica.loc.gov/lccn/sn87056600/1893-01-25/ed-1/seq-4/">http://chroniclingamerica.loc.gov/lccn/sn87056600/1893-01-25/ed-1/seq-4/</a></p>
+     <p>Diaries, letters, and other personal or business writings from the late 18th and early 
+     19th century are likely better avenues for those seeking an origin story. Certainly digitized, 
+     widely accessible and searchable versions of personal narratives from this time period 
+     are on the rise but unfortunately for the general public they are too often contained 
+     within subscription databases more readily available to university scholars. 
+     The joys of paper archive culling are many and for a time will continue to be the mainstay 
+     for hoosier origin seekers. For additional origin theories consult the bibliography.
+     </p>
+     <p>
+     We wanted to leverage freely available databases that include searchable historic full 
+     text to look at the frequency in appearance of the word hoosier, when it was being used, 
+     where it was being used, who was using it and how, and various cross sections of these characteristics. 
+     Examples of such databases include: University of Michigan and Cornell University’s 
+     <a href=" http://quod.lib.umich.edu/m/moagrp/">Making of America</a>, a full text database 
+     of early American books and journals and is ripe with early hoosier references; 
+     <a href=" https://www.hathitrust.org">HathiTrust</a>; <a href=" https://archive.org/index.php">Internet Archive</a>; 
+     and <a href="https://books.google.com">Google Books</a>.  From Google Books, <i>Yankee Notions, or Whittlings of 
+     Jonathan’s Jack-knife, Volume 1</i> published in 1852, we see a tidbit that also appears 
+     republished in many newspapers of the time but in this monograph it is accompanied with 
+     an unflattering image of a hoosier wedding.
+     </p>
+     <p><img src="img/hoosierwedding.jpg"></img></br>In:  Yankee Notions, or Whittlings of 
+     Jonathan’s Jack-knife, Volume 1. T. W. Strong, New York: 1852. Pg. 22 
+     <a href=" https://books.google.com/books?id=F20AAAAAYAAJ">https://books.google.com/books?id=F20AAAAAYAAJ</a>
+     </p>
+     <p>Ultimately we chose to focus our text analysis on digitized newspapers available 
+     through the National Digital Newspaper Program, a partnership between the National Endowment 
+     for the Humanities and the Library of Congress. This data is freely available and most 
+     importantly the Library of Congress provides API access to the transcript files of the 
+     full text. Relying on massive datasets of machine-readable text from newspapers across 
+     the United States covering the years 1836-1922, we have new insights on the term hoosier’s 
+     usage through time and across geographies. Certainly it would be interesting to see what 
+     post 1922 news has to tell us about the word, particularly as it is adopted by Indiana 
+     University as a college (including sports) mascot, but copyright restricts our dataset to 
+     public domain (pre-1923) newspapers.
+     </p>
+  </div>
+  <div id="tabs-2">
+    <h2>Preliminary Findings</h2>
+    <p>	We suggest that the term’s definition, like all language, was and remains in flux. 
+    Instead of a tidy trajectory from one meaning to another, this newspaper analysis suggests 
+    hoosier has always had a variety of meanings and connotations. It was used to refer to 
+    individuals from &quot;the West,&quot; which in early 19th century included Indiana, Illinois, 
+    Missouri, and parts of Michigan, Wisconsin, and sometimes Kentucky. However, there is 
+    also clear and consistent evidence that during the same time period it was just as often 
+    a term for referring exclusively to Indianans. The below 1938 <i>Madisonian</i> article 
+    details early State affiliated nicknames including Hoosier for resident of Indiana.</p>
+    <!-- Insert Nicknames caption: The Madisonian. (Washington City [i.e. Washington, D.C.]),
+     20 Oct. 1838. Chronicling America: Historic American Newspapers. Lib. of Congress. 
+     <http://chroniclingamerica.loc.gov/lccn/sn82015015/1838-10-20/ed-1/seq-1/>] -->
+     <p>The <a href="wordcloud.html">word clouds</a> for 1836-1849 support these dual geographic connections. 
+     They include the words west, western, Illinois, Kentucky, buckeye (Ohioan nickname) and sucker (Illini nickname). 
+     These nicknames are often invoked in political discussions and the same word clouds reflect political speak with 
+     terms like: whig, yankee, and democrat.</p>
+     <p>The <a href="map1.html">Choropleth map</a> showing the relative frequency in appearance of the 
+     term hoosier within Chronicling America reflects both the Indiana and &quot;West&quot; connection with greater 
+     percentages of pages containing the term in Indiana, Illinois, Missouri, Michigan, Wisconsin, and Kentucky newspapers. 
+     Equally interesting though are states like Connecticut that do not fall within this historic &quot;West&quot; area and display equally 
+     high mentions. Geographical residency status is not the only characteristic in flux in hoosier’s early years (1830s-1880s), 
+     though certainly the rough frontier landscape, rooted in the geography of the West had a considerable 
+     influence on the term’s additional common characteristics. Surviving and thriving in the backwoods of the &quot;West’s&quot; 
+     frontier required gumption, stick-to-it-tiveness, and strength. This existence was also reclusive and by city dweller 
+     standards, less refined. Stories that reflect the positive and negative of all these characteristics abound in the 
+     newspapers analyzed. In fact many stories at first appear derogatory but upon full reading are actually more praising in nature, 
+     describing an uncouth backwoodsman who surprises the writer with strength and hospitality.
+     </p>
+     <p>Even into the 1890s we see quips that allude to hoosier’s bifurcated sentiment. From, 
+     &quot;The Educated Hoosier Cockroach,&quot; in the <i>Rock Island Daily Argus</i> (Illinois), July 24, 
+     1893, Page 8, originally printed in the <i>Indianapolis News</i>, we see a combination of insult and praise. 
+     The antihero Hoosier Cockroach pitted against the office gentleman, proves his brawn, gumption, 
+     and brotherly valor, over lesser roaches and the presumptively educated clerk. Only the Hoosier 
+     cockroach would prevail in these deleterious circumstances.</p>
+     <p><img src="img/hoosiercockroach.jpg"></img></br><i>Rock Island daily Argus</i>. (Rock Island, Ill.),
+      24 July 1893. <i>Chronicling America: Historic American Newspapers</i>. Lib. of Congress. 
+      <a href=" http://chroniclingamerica.loc.gov/lccn/sn92053945/1893-07-24/ed-1/seq-8/">http://chroniclingamerica.loc.gov/lccn/sn92053945/1893-07-24/ed-1/seq-8/</a>
+      </p>
+      <p>&quot;Hoosier Customer,&quot; from the Stroudsburg, Pennsylvania’s <i>Jeffersonian Republican</i> 
+      of November 3, 1841 touches on a variety characteristics that often accompany hoosier 
+      mentions. Wrapped up in one story we see evidence of hoosier as it relates to:</br>
+      <ul>
+      <li>a genre of jocular story telling</li>
+      <li>a dialect</li>
+      <li>the West</li>
+      <li>Indiana</li>
+      <li>Ax wielding backwoodsman</li>
+      <li>Flatboatman</li>
+      <li>Divisions of North and South/Union and Confederacy</li> 
+      <li>Uncouthness</li>
+      <li>Uneducated</li>
+      <li>Meritoriously independent</li>
+      <li>Outspoken</li>
+      <li>Antihero</li>
+	</ul>
+	</p>
+	<p>
+	<img src="img/hoosiercustomer.jpg"></img></br><i>Jeffersonian Republican</i>. (Stroudsburg, Pa.), 
+	03 Nov. 1841. <i>Chronicling America: Historic American Newspapers.</i> Lib. of Congress.</i> 
+	<a href="http://chroniclingamerica.loc.gov/lccn/sn86053954/1841-11-03/ed-1/seq-1/">http://chroniclingamerica.loc.gov/lccn/sn86053954/1841-11-03/ed-1/seq-1/</a>
+	</p>
+	<p>
+	<p>Indeed these folksie stories appear over and over from 1830s-1880s with the 
+	most popular stories being picked up and repeated through the US. 
+	Not all hoosier characters are a combination of positive and negative attributes.
+	 Many are outright negative with no redeeming qualities suggested. Additional descriptors 
+	 that regularly grace a hoosier reference include:</br>
+	 <ul>
+	<li>Simple</li>
+	<li>Tall, lanky</li>
+	<li>Bear-like</li>
+	<li>Rustic</li>
+	<li>Stolid</li>
+	<li>Dirty</li>
+	<li>Squatters</li>
+	<li>Humorous</li>
+	<li>Pathetic</li>
+	</ul>
+	</p>
+	<p>Another origin story that is harkened in our newspaper findings is the strong association 
+	between the word and boat travel (recall hushing). The <a href="map1.html">Choropleth map</a> 
+	reflects a higher number of instances of the word in states that border the Ohio and Mississippi 
+	Rivers. Additionally, newspaper stories reference flatboats transporting goods from the West to 
+	New Orleans manned by hoosiers, men building the canals in the West are characterized as hoosiers, 
+	and steamboat passengers share amusing accounts of encounters with hoosier flatboatmen returning home. 
+	One such example from an 1846 <i>Kosciusko Chronicle</i> of Mississippi depicts such and interaction.
+	</p>
+	<p>
+	<img src="img/hoosieractorboat.jpg"></img></br>
+	<i>Kosciusko chronicle</i>. (Kosciusko, Miss.), 04 June 1846. <i>Chronicling America: 
+	Historic American Newspapers</i>. Lib. of Congress. <a href="http://chroniclingamerica.loc.gov/lccn/sn83016940/1846-06-04/ed-1/seq-1/">
+	http://chroniclingamerica.loc.gov/lccn/sn83016940/1846-06-04/ed-1/seq-1/</a>
+	<p>
+	Stories such as these are less news and more tale-like. Their rootedness in truth is 
+	unknown but their proliferation is strong in both newspapers and other fictional literature, 
+	plays, and poetry of the time. Poetry regarding hoosier appears in newspapers. 
+	<i>The Hoosier Nest</i> by John Finley of Richmond, Indiana in 1833 (or 1934) includes an 
+	alternative spelling of hoosier, hoosher. For this research we pulled but have not yet included 
+	in our analysis the following spelling variations within the newspaper dataset: hoosier, 
+	hoosher, husser, hooshier, hoosheroon, hoosierine, and hoosierland. We did not pull hosier, 
+	another alternative spelling, as it resulted in too many instances of hosiery (as in stockings). 
+	Another poet, John Whitcomb Riley, 1849-1916, became known as the Hoosier Poet because of his Greenfield, 
+	Indiana birthplace and later Indianapolis home but also because of his richly dialectical writing. 
+	<a href=" http://www.digitalindy.org/cdm/search/collection/riley">Original recordings</a> 
+	from the Indianapolis Public Library of the poet reading his own poetry including, &quot;Dot leedle boy,&quot; 
+	and &quot;The bear story that Alex 'ist maked up his-own-se’f&quot; offer a taste of the hoosier 
+	dialect that is regularly characterized in the newspapers as baffling, incomprehensible, mutterings.
+	</p>
+	<p>As suggested earlier it is worth considering that hoosier has always had a variety 
+	of connotations. Dunn suggests hoosier began in the South as a negative term and later 
+	came to represent the inhabitants of Indiana. The word appears, in part, to follow other 
+	epithets that are ultimately embraced by the entity they are intended to describe, epithets 
+	that are converted into a cry of ownership, solidarity, and identity. Hillbilly and redneck 
+	have experienced similar trajectories. Patrick Huber in his 1992 thesis, <i>Rednecks and Woolhats, 
+	Hoosiers and Hillbillies: Working-class Southern Whites, Language and the Definition of Identity</i>, 
+	examines the proliferation of epithets for &quot;poor white Southerners&quot; in 1880s and 1890s. 
+	Huber explores how these epithets transform over time, “others went so far as to rob 
+	certain damaging slurs of much of their psychological impact by readily adopting or reclaiming 
+	these imposed epithets and rehabilitating them into badges of identity and pride. Their responses, 
+	sometimes expressed collectively as in trade unions and political organizations but more often expressed individually, 
+	were acts of empowerment in which Southern white working people proudly asserted themselves as &quot;rednecks,&quot; &quot;hillbillies,&quot; 
+	&quot;wool hats&quot; or even &quot;hoosiers&quot; (11-12).</p>
+	<p>Another finding that supports this notion of positive claiming of a term is the proliferation 
+	with which advertising begins to include hoosier as a proper noun, a product name. We see 
+	examples of farm implements employing Hoosier as a type, for example: Hoosier Corn Drill, 
+	Hoosier Wheat Drill, and Hoosier Plow. Hoosier appears consistently in Indiana papers as 
+	the beginning of a business or store name, such as Hoosier Grocery. The most prolific and 
+	indeed the majority of all references to hoosier in our newspaper study was that of the Hoosier Cabinet, 
+	a piece of kitchen furniture hailed as a time saving necessity and manufactured by the Hoosier Manufacturing Company 
+	in New Castle, Indiana from late 1890s-1930s. Hoosier Cabinet advertisements make up 31.5% of all 
+	hoosier references in Chronicling America. The size of word kitchen and cabinet in the <a href="wordcloud.html">word clouds</a> from 
+	1900-1922 visually reinforce this statistic. To connect one’s livelihood to a product 
+	name and brand assumes that the word garnered widespread positive appeal. Alternatively, 
+	or additionally, to what extent did the national embrace of popular products like the 
+	Hoosier Cabinet further feed the positive sentiment of hoosier?</p> 
+	 <p><img src="img/hoosierplow.jpg"></img></br><i>Delaware gazette</i>. (Delaware, Ohio), 16 
+	 July 1869. Pg 2 <i>Chronicling America: Historic American Newspapers.</i> Lib. of Congress. 
+	 <a href="http://chroniclingamerica.loc.gov/lccn/sn83035595/1869-07-16/ed-1/seq-2/">http://chroniclingamerica.loc.gov/lccn/sn83035595/1869-07-16/ed-1/seq-2/</a>
+	</p>
+
+	<p> <img src="img/hoosiergrocer.jpg"></img></br><i>Evansville daily journal</i>. (Evansville, Ind.), 
+	30 Dec. 1865. Pg 4. <i>Chronicling America: Historic American Newspapers</i>. Lib. of Congress. 
+	<a href="http://chroniclingamerica.loc.gov/lccn/sn86059181/1865-12-30/ed-1/seq-4/">http://chroniclingamerica.loc.gov/lccn/sn86059181/1865-12-30/ed-1/seq-4/</a>
+	</p>
+
+	<p> <img src="img/hoosiercabinet.jpg"></img><i>The evening current</i>. (Carlsbad, N.M.), 
+	26 Nov. 1917. <i>Chronicling America: Historic American Newspapers</i>. Lib. of Congress. 
+	<a href="http://chroniclingamerica.loc.gov/lccn/sn93061433/1917-11-26/ed-1/seq-4/">http://chroniclingamerica.loc.gov/lccn/sn93061433/1917-11-26/ed-1/seq-4/</a>
+	</p>
+
+	<p>For additional reading on the meaning of hoosier start with Indiana University Librarian Jeffrey Graf’s, 
+	&quot;The Word Hoosier,&quot; at <a href=" http://www.indiana.edu/~librcsd/internet/extra/hoosier.html ">http://www.indiana.edu/~librcsd/internet/extra/hoosier.html</a>.</p>
+
+	<p>This move towards positivity is supported in a study conducted by researchers with 
+	the <i>Dictionary of American Regionalism</i> (DARE)in 1965-1970 and again in 2013-2014. 
+	Question HH1 of the early survey asks the geographically dispersed participants to list &quot;Names 
+	and nicknames for a rustic or countrified person.&quot;  40 of the 2212 respondents offered 
+	hoosier or a phrase including hoosier as their response (Cassidy). The 2013-14 DARE study 
+	data is limited to Wisconsin respondents only. In this version question HH1 reads, &quot;What 
+	are some names and nicknames for a rustic or country person.&quot; Though only 25 Wisconsin 
+	resident participants responded, hoosier is never offered as an answer. A new question 
+	to the 2013-2014 survey, HH2d, asks, “What does it mean to say that someone is a &quot;hoosier&quot;? 
+	8 of the 9 respondents indicate a person from Indiana (<i>Dictionary of American Regional 
+	English 2013-14 Survey</i>). A heftier and far more geographically dispersed dataset is 
+	necessary to draw any significant conclusions regarding hoosier change between these 20th 
+	century decades. The internet only, <a href="www.urbandictionary.com">Urban Dictionary</a> 
+	created and updated by general users includes many present day derogatory references to 
+	hoosier including this one noted as &quot;Top Definition&quot; as a result of user interaction with 
+	the definition (thumbs up or thumbs down), &quot;St. Louis Meaning: white trash of the worst kind. 
+	Also used as an adjective to describe anything several notches below your own perceived 
+	sophistication. Dates back to a strike that occurred in St. Louis in the 30's. During this 
+	strike, scab workers from Indiana were brought in to fill in for strikers. The perjorative 
+	[sic] hoosier stems from the St. Louis workers' lack of appreciation for this.&quot;</p>
+
+  </div>
+  <div id="tabs-3">
+    <h2>What's next?</h2>
+    <p>Our next step is to conduct sentiment analysis on hoosier as represented within each 
+    newspaper reference.  Sentiment analysis uses statistical analysis and/or machine learning 
+    methods to examine the subjective feelings, attitudes, emotions, and opinions, represented 
+    in a text. It is often binary, for example positive vs. negative.  While machine learning 
+    quickens the mass text review, human intervention is essential in sentiment analysis. As 
+    demonstrated in the findings discussion above a binary analysis may be a challenge with 
+    the term hoosier as a single reference often encompassing both positive and negative qualities. 
+    Hoosier (capitalized) vs. hoosier (lower case) vs. “hoosier” (in quotes) is another avenue to examine. 
+    We’ve seen Hoosier as a proper noun suggesting a move towards identity claiming and “hoosier” 
+    (in quotes) expressing use as a not yet solidified in the language, slang descriptor.  
+    A more fruitful analysis may be one of examining particular qualities, similar to those 
+    listed in our Hoosier Customer story analysis.  What hoosier qualities appear most often 
+    together (ex. backwoodsman and flatboat), what time period or geography are each quality 
+    or combination of qualities most prominent (ex. Connecticut and Hoosier Cabinet)?  
+    Is there a nuanced shift away from more negative references over time?  Does geography 
+    play a role in sentimentality as suggested by early origin seekers such as Dunn?  While 
+    the true origin story of hoosier likely eludes the published texts like newspapers, a 
+    historiography of hoosier origin stories would be possible and interesting. 
+     The dataset is ripe for questioning and no doubt each question will turn up another.</p>
+    </div>    
+  <div id="tabs-4">
+    <h2>Bibliography</h2>
+    <ul style="list-style-type:none">
+    <li>Bailey, Margaret Jewett. <i>The Grains, Or, Passages in the Life of Ruth Rover, with Occasional Pictures of Oregon, Natural and Moral</i>. Portland, Oregon: Carter & Austin Printers, 1854</li></br>
+
+	<li>Baker, Ronald L. <i>From Needmore to Prosperity: Hoosier Place Names in Folklore and History</i>. Bloomington, IN: Indiana University Press, 1995.</li></br>
+
+	<li>Blakey, George T. “Stalking the Elusive Hoosier’s Nest.” <i>Traces of Indiana and Midwestern History</i> 11, no. 3 (Summer 1999): 4–13.</li></br>
+
+	<li>Cassidy, Fredric G. , Ed. <i>Dictionary of American Regional English, 1965-70</i>. Harvard University, Accessed on March 18, 2015 via DigitalDARE. <a href="http://www.daredictionary.com/page/aboutdaresurvey/">http://www.daredictionary.com/page/aboutdaresurvey/</a>.</li></br>
+
+	<li><i>Dictionary of American Regional English 2013-14 Survey</i>, University of Wisconsin, Accessed on June 13, 2016. <a href="http://dare.wisc.edu/survey-results/2013-2014"> http://dare.wisc.edu/survey-results/2013-2014</a>.</li></br>
+
+	<li>Dunn, Jacob P., Jr. <i>Indiana and Indianans: A History of Aboriginal and Territorial Indiana and the Century of Statehood</i>. Chicago, IL: American Historical Society, 1919.</li></br>
+
+	<li> &mdash; &mdash; &mdash;. “Origin of the Word Hoosier.” <i>Indiana Magazine of History</i> 1, no. 2 (1905): 86–96.</li></br>
+
+	<li> &mdash; &mdash; &mdash;. “The Word Hoosier.” In <i>Indiana Historical Society Publications</i>, Vol. 4. Indiana Historical Society Publications 2. Indianapolis, IN: Bobbs-Merrill Co., 1907.</li></br>
+
+	<li>&mdash; &mdash; &mdash;. “The Word ‘Hoosier.’” <i>Indiana Magazine of History</i> 7, no. 2 (June 1911): 61–63.</li></br>
+
+	<li>Finley, John. <i>The Hoosier’s Nest and Other Poems</i>. Cincinnati, OH: Moore, 1866.</li></br>
+
+	<li>Graf, Jeffrey. “The Word Hoosier.” Indiana University Herman B Wells Library, November 1, 2000. <a href="http://www.indiana.edu/~librcsd/internet/extra/hoosier.html"> http://www.indiana.edu/~librcsd/internet/extra/hoosier.html</a></li></br>
+
+	<li>Haller, Steve. “The Meanings of Hoosier?: 175 Years and Counting.” <i>Traces of Indiana and Midwestern History</i> 20 (Fall 2008): 4–13. </li></br>
+
+	<li>Heilman, E. “Hoosiers, Hicks, and Hayseeds: The Controversial Place of Marginalized Ethnic Whites in Multicultural Education.” <i>Equity & Excellence in Education</i> 37 (2004): 67–79. </li></br>
+
+	<li>Hiler, Nancy R. <i>The Hoosier Cabinet in Kitchen History</i>. Indiana University Press, 2009. </li></br>
+
+	<li>Huber, Patrick. “Rednecks and Woolhats, Hoosiers and Hillbillies: Working-Class Southern Whites, Language and the Definition of Identity.” University of Missouri-Columbia, 1992. <a href="https://books.google.com/books/about/Rednecks_and_Woolhats_Hoosiers_and_Hillb.html?id=7o0CHwAACAAJ">https://books.google.com/books/about/Rednecks_and_Woolhats_Hoosiers_and_Hillb.html?id=7o0CHwAACAAJ</a>. </li></br>
+
+	<li>Huber, Patrick, and Kathleen Morgane Drowne. “Redneck: A New Discovery.” <i>Faculty Research & Creative Works</i> paper 3 (2001). </li></br>
+
+	<li>John Piatt Dunn. “The Word ‘Hoosier.’” <i>Indiana Magazine of History</i> 7, no. 2 (June 1911): 61–63. </li></br>
+
+	<li>Jonathan Clark Smith. “New Findings on the Earliest Written Uses of ‘Hoosier.’” <i>Indiana Magazine of History</i> 104, no. 3 (September 2008): 293–95. </li></br>
+
+	<li>Nicholson, Meredith. The Hoosiers. New York: MacMillan, 1900. </li></br>
+
+	<li>Piersen, William D. “The Origin of the Word ‘Hoosier’: A New Interpretation.” <i>Indiana Magazine of History</i> 91, no. 2 (June 1995): 189–96. </li></br>
+
+	<li>Power, Richard Lyle. “Hoosier as an American Folk-Type.” <i>Indiana Magazine of History</i> 38, no. 2 (June 1942): 108–22. </li></br>
+
+	<li>Richard Lyle Power. “The Hoosier as an American Folk-Type.” <i>Indiana Magazine of History</i> 38, no. 2 (June 1942): 107–22. </li></br>
+
+	<li>Rose, Gregory S. “Hoosier Origins: The Nativity of Indiana’s United States- Born Population in 1850” 81, no. 3 (September 1985): 201–32. </li></br>
+
+	<li>Short, Oscar D. “Origin of the Term ‘Hoosier.’” <i>Indiana Magazine of History</i> 25, no. 2 (June 1929): 101–3. </li></br>
+
+	<li>Smith, Jonathan Clark. “New Findings on the Earliest Written Uses of ‘Hoosier’ [Research Note].” <i>Indiana Magazine of History</i> 104, no. 3 (2008): 293–95. </li></br>
+
+	<li>&mdash; &mdash; &mdash;.. “Not Southern Scorn but Local Pride: The Origin of the Word Hoosier and Indiana’s River Culture.&quot; <i>Indiana Magazine of History</i> 103, no. 2 (June 2007): 183–94. </li></br>
+
+	<li>Unknown. “Origin of the Term Hoosier.” <i>Indiana Magazine of History</i> 28, no. 3 (September 1932): 208–9. </li></br>
+
+	<li>Urban Dictionary. Accessed June 13, 2016. <a href="http://www.urbandictionary.com/define.php?term=Hoosier">http://www.urbandictionary.com/define.php?term=Hoosier</a></li></br>
+
+	<li>Van Bolt, Roger H. “Hoosier Politicians of the 1840s.” <i>Indiana Magazine of History</i> 48, no. 1 (March 1952): 23–36.</li></br>
+
+	<li>Webb, Stephen H. “Introducing Black Harry Hoosier: The History Behind Indiana’s Namesake.” <i>Indiana Magazine of History</i> 98, no. 1 (March 2002): 30–41. </li></br>
+
+	<li><i>Yankee Notions, Or Whittlings of Jonathan’s Jack-Knife, Volume 1</i>. Vol. 1. New York: T. W. Strong, 1852. <a href="https://books.google.com/books?id=F20AAAAAYAAJ&dq=%22hoosier%22&pg=PA22#v=onepage&q=%22hoosier%22&f=false">https://books.google.com/books?id=F20AAAAAYAAJ&dq=%22hoosier%22&pg=PA22#v=onepage&q=%22hoosier%22&f=false</a>.</li></br>
+
+	<li><i>Yankee Notions, Or Whittlings of Jonathan’s Jack-Knife, Volume 2.</i> Vol. 2. New York: T. W. Strong, 1852.</br> <a href="https://books.google.com/books?id=71Q5AQAAMAAJ&dq=%22hoosier%22&pg=PA2#v=onepage&q=%22hoosier%22&f=false"> https://books.google.com/books?id=71Q5AQAAMAAJ&dq=%22hoosier%22&pg=PA2#v=onepage&q=%22hoosier%22&f=false</a>.</li></br>
+
+    </ul>
+</div>
             </div>
         </div>
     </div>
+    <a href="#" class="back-to-top">Back to Top</a>
     <!-- /.container -->
 
     <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+     <script src="js/jquery.js"></script>
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script>
+  $(function() {
+  	$("#tabs").tabs({ collapsible: true});
+    $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
+    $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+  });
+  </script>
+  <script>
+  var amountScrolled = 300;
+
+$(window).scroll(function() {
+	if ( $(window).scrollTop() > amountScrolled ) {
+		$('a.back-to-top').fadeIn('slow');
+	} else {
+		$('a.back-to-top').fadeOut('slow');
+	}
+});
+
+$('a.back-to-top, a.simple-back-to-top').click(function() {
+	$('html, body').animate({
+		scrollTop: 0
+	}, 700);
+	return false;
+});
+</script>
+ 
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
