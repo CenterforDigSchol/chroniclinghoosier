@@ -537,9 +537,7 @@ function(datamap) {
             datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
             window.open("http://chroniclingamerica.loc.gov/search/pages/results/?date1=1836&date2=1922&proxtext=hoosier&x=0&y=0&dateFilterType=yearRange&rows=20&searchType=basic&state="+geography.properties.name);    
             });
-        },
 
-function(datamap) {
            datamap.svg.call(d3.behavior.zoom().on("zoom", redraw));
 
            function redraw() {
